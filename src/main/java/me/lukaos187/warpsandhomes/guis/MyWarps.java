@@ -68,7 +68,7 @@ public class MyWarps extends WarpMenu {
                 }
             }
             case "Back" -> new WarpChoice(player, warpFile).open();
-            default -> new WarpOpt(player, warpFile, displayName).open();
+            default -> new WarpOpt(player, warpFile, displayName, currentItem).open();
         }
     }
 

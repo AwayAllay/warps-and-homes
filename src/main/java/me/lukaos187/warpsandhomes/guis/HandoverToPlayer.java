@@ -47,7 +47,7 @@ public class HandoverToPlayer extends WarpMenu{
 
         switch (displayName){
 
-            case "Back" -> new WarpOpt(player, warpFile, warp.getName()).open();
+            case "Back" -> new WarpOpt(player, warpFile, warp.getName(), new ItemStack(Material.IRON_BARS)).open();
             case "Next" -> {
                 if ((currentPage + 1) * 45 < onlinePlayers.size()) {
                     currentPage++;

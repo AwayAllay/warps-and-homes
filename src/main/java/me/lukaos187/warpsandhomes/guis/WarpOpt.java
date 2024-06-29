@@ -3,13 +3,11 @@ package me.lukaos187.warpsandhomes.guis;
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import me.lukaos187.warpsandhomes.commands.warpSubcommands.*;
 import me.lukaos187.warpsandhomes.util.WarpFile;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -20,10 +18,12 @@ import java.util.Objects;
 public class WarpOpt extends WarpMenu{
 
     private final String name;
+    private final ItemStack warpItem;
 
-    public WarpOpt(Player player, WarpFile warpFile, String warpName) {
+    public WarpOpt(Player player, WarpFile warpFile, String warpName, ItemStack warpItem) {
         super(player, warpFile);
         this.name = warpName;
+        this.warpItem = warpItem;
     }
 
     @Override
@@ -74,7 +74,8 @@ public class WarpOpt extends WarpMenu{
             case WRITTEN_BOOK -> {/*TODO DESCRIBE OPTION*/
 
             }
-            case ANVIL -> {/*TODO RENAME OPTION*/
+            case ANVIL -> {
+                new RenameGUI(player, warpItem, warpFile.getWarp(name), warpFile).open();
             }
         }
     }
