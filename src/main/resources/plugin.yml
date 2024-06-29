@@ -1,0 +1,19 @@
+name: WarpsAndHomes
+version: '${version}'
+main: me.lukaos187.warpsandhomes.WarpsAndHomes
+api-version: '1.20'
+commands:
+  warp:
+    description: Allows players to warp in their world
+    usage: /warp
+  wahConfig:
+    description: Change the values in the config.yml
+    usage: /wahConfig
+    permission: warpsandhomes.admin
+  warpMenu:
+    description: Opens the gui version of the plugin
+    usage: /warpMenu
+permissions:
+  warpsandhomes.admin:
+    description: Allows access to administrative commands of the WarpsAndHomes plugin
+    default: op

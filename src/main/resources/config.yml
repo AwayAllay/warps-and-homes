@@ -1,0 +1,50 @@
+#Cool Plugin Config.yml
+
+#---------------------------PLUGIN-SETTINGS---------------------------
+allow-goodbye-and-hello-message: true #Enable this if you want confirmation for the en/disabling of the plugin in the console
+
+allow-warp-animations: true #Enables animations during warp
+#allow-chat-warps: true #Enable if you want your players to warp per chat!!!!!!!!!!!!!!!!
+#allow-warp-gui: true #Allows if you want to have the warp gui!!!!!!!!!
+#allow-warp-gui-per-chat: true #If this is disabled, players will only be able to warp per gui with the warper!!!!!!!
+
+#Allows if players can craft a warper, which can open the warp-gui (Recommended with allow-warp-gui-per-chat: false and allow-chat-warps: false)
+#allow-warper: true!!!!!!!
+#---------------------------------------------------------------------
+
+
+#---------------------------WARP-SETTINGS---------------------------
+allow-private-warps: true #Allows players to have private warps automatically disables locking warps if set to false
+allow-public-warps: true #Allows players to have public warps automatically disables unlocking warps if set to false
+allow-warp-deleting: true #Allows players to delete their warps INC
+allow-warp-describing: true #Allows players to add a description to their warp afterwards (You can always leave a description at the INITIALIZING of the warp!) INC
+allow-warp-hand-overing: true #Allows players to hand their warp over to another player
+allow-warp-informing: true #Allows players to see information about a warp (NOT private warps of other people!) - This has no effect if you use the GUI version of the plugin!
+allow-warp-listing: true #Allows players to list all their warps, or the public warps of other players - This has no effect if you use the GUI version of the plugin!
+allow-warp-renaming: true #Allows players to rename their warp
+allow-warp-updating: true #Allows players to update their warp to a new location
+allow-warp-clearing: true #Allows players to clear all their warps at once
+enable-max-player-warps: false #En-/Disables if a player has a limited amount of warps
+max-player-warps: 10 #If enable-max-player-warps: true this is the max amount of warps a player can have
+allow-crossdimentional-warping: true #Allows players to warp to warps that are in another dimension
+#WARP-COOLDOWNS
+warp-cooldown: false #En-/Disables if warping has a cooldown
+cooldown-time: 5 #The cooldown time in seconds
+
+has-damage-warp-cooldown: false #En-/Disables if players have to wait before warping, if they were damaged
+damage-cooldown-player: true #Cooldown only if a player is damaged by another player
+damage-warp-cooldown: 5 #Cooldown for damage cooldown in seconds
+#-------------------------------------------------------------------
+
+
+#---------------------------ANIMATION-SETTINGS--------------------------- (Only if allow-warp-animations: is set to true! SEE PLUGIN-SETTINGS)
+
+#For available colors see: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Color.html (Capital letters!)
+#To make the particles have the colors of the player skin when warping, write here: 'PLAYER'
+particle-colour: 'PLAYER'
+#For available sounds see: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html (Capital letters!)
+warping-sound: 'ENTITY_ENDERMAN_TELEPORT'
+
+#There are following types: 'SPHERE'; 'ENDERMAN'; 'PORTAL'
+animation-type: 'ENDERMAN'
+#------------------------------------------------------------------------
