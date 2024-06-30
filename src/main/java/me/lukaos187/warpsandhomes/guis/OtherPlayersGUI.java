@@ -1,6 +1,5 @@
 package me.lukaos187.warpsandhomes.guis;
 
-import me.lukaos187.warpsandhomes.commands.warpSubcommands.WarpHandover;
 import me.lukaos187.warpsandhomes.util.HeadGetter;
 import me.lukaos187.warpsandhomes.util.Warp;
 import me.lukaos187.warpsandhomes.util.WarpFile;
@@ -18,13 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HandoverToPlayer extends WarpMenu{
+public class OtherPlayersGUI extends WarpMenu{
     private final List<Player> onlinePlayers = new ArrayList<>();
     private int currentPage = 0;
-    private final Warp warp;
-    public HandoverToPlayer(Player player, WarpFile warpFile, String warpName) {
+    public OtherPlayersGUI(Player player, WarpFile warpFile) {
         super(player, warpFile);
-        this.warp = warpFile.getWarp(warpName);
         onlinePlayers.addAll(Bukkit.getOnlinePlayers());
     }
 
@@ -35,7 +32,7 @@ public class HandoverToPlayer extends WarpMenu{
 
     @Override
     public String name() {
-        return ChatColor.BLUE + "Select new owner";
+        return ChatColor.BLUE + "Choose a player";
     }
 
     @Override
@@ -43,11 +40,11 @@ public class HandoverToPlayer extends WarpMenu{
 
         e.setCancelled(true);
 
-        String displayName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
+        String displayName = ChatColor.stripColor(Objects.requireNonNull(Objects.requireNonNull(e.getCurrentItem()).getItemMeta()).getDisplayName());
 
         switch (displayName){
 
-            case "Back" -> new WarpOpt(player, warpFile, warp.getName(), new ItemStack(Material.IRON_BARS)).open();
+            case "Back" -> new WarpChoice(player, warpFile).open();
             case "Next" -> {
                 if ((currentPage + 1) * 45 < onlinePlayers.size()) {
                     currentPage++;
@@ -62,7 +59,7 @@ public class HandoverToPlayer extends WarpMenu{
                     fill();
                 }
             }
-            default -> new ConfirmGUI(player, warpFile, ChatColor.AQUA + "Hand over", warp.getName(), displayName).open();
+            default -> new PublicWarpsOnlinePlayerGUI(player, warpFile, Bukkit.getPlayer(displayName)).open();
         }
 
     }
@@ -89,7 +86,7 @@ public class HandoverToPlayer extends WarpMenu{
             SkullMeta skullMeta = (SkullMeta) playerHead.getItemMeta();
             skullMeta.setOwningPlayer(onlinePlayer);
             skullMeta.setDisplayName(ChatColor.GREEN + onlinePlayer.getName());
-            skullMeta.setLore(new ArrayList<>(List.of("Click to hand this ", "warp over to " + onlinePlayer.getName())));
+            skullMeta.setLore(new ArrayList<>(List.of("Click to see the warps ", "of " + onlinePlayer.getName())));
             playerHead.setItemMeta(skullMeta);
 
             inventory.setItem(i, playerHead);

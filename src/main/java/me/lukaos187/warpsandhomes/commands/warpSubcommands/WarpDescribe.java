@@ -29,7 +29,7 @@ public class WarpDescribe implements Subcommand{
 
     @Override
     public String getUsage() {
-        return "/warp describe <name>";
+        return "/warp describe <name> <description>";
     }
 
     @Override

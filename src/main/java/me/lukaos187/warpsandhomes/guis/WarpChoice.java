@@ -39,7 +39,7 @@ public class WarpChoice extends WarpMenu{
         if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("My Warps")){
             new MyWarps(player, warpFile).open();
         } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Other Warps")) {
-
+            new OtherPlayersGUI(player, warpFile).open();
         } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Back")) {
             new MainMenu(player, warpFile).open();
         } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Set")) {

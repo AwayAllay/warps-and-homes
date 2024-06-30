@@ -48,17 +48,8 @@ public class WarpOpt extends WarpMenu{
                 String[]args = {"warp", name};
                 new WarpToWarp(warpFile).perform(player, args);
             }
-            case TNT -> {
-                player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
-                String[]args = {"delete", name};
-                new DeleteWarp(warpFile).perform(player, args);
-                new MyWarps(player, warpFile).open();
-            }
-            case COMPASS -> {
-                player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
-                String[]args = {"update", name};
-                new WarpUpdate(warpFile).perform(player, args);
-            }
+            case TNT -> new ConfirmGUI(player, warpFile, ChatColor.RED + "Delete-Warp", name).open();
+            case COMPASS -> new ConfirmGUI(player, warpFile, ChatColor.GRAY + "Update-Warp", name).open();
             case GREEN_DYE -> {
                 player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
                 String[]args = {"unlock", name};
@@ -71,12 +62,8 @@ public class WarpOpt extends WarpMenu{
             }
 
             case PLAYER_HEAD -> new HandoverToPlayer(player, warpFile, name).open();
-            case WRITTEN_BOOK -> {/*TODO DESCRIBE OPTION*/
-
-            }
-            case ANVIL -> {
-                new RenameGUI(player, warpItem, warpFile.getWarp(name), warpFile).open();
-            }
+            case WRITTEN_BOOK -> new DescribeGUI(player, warpItem, warpFile.getWarp(name), warpFile).open();
+            case ANVIL -> new RenameGUI(player, warpItem, warpFile.getWarp(name), warpFile).open();
         }
     }
 
