@@ -1,8 +1,6 @@
 package me.lukaos187.warpsandhomes.guis;
 
-import me.lukaos187.warpsandhomes.commands.warpSubcommands.WarpHandover;
 import me.lukaos187.warpsandhomes.util.HeadGetter;
-import me.lukaos187.warpsandhomes.util.Warp;
 import me.lukaos187.warpsandhomes.util.WarpFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,53 +16,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HandoverToPlayer extends WarpMenu{
-    private final List<Player> onlinePlayers = new ArrayList<>();
-    private int currentPage = 0;
-    private final Warp warp;
-    public HandoverToPlayer(Player player, WarpFile warpFile, String warpName) {
+public abstract class PaginatedPlayerListGUI extends WarpMenu{
+    protected final List<Player> onlinePlayers = new ArrayList<>();
+    protected int currentPage = 0;
+
+    public PaginatedPlayerListGUI(Player player, WarpFile warpFile) {
         super(player, warpFile);
-        this.warp = warpFile.getWarp(warpName);
         onlinePlayers.addAll(Bukkit.getOnlinePlayers());
     }
 
     @Override
     public int slots() {
         return 54;
-    }
-
-    @Override
-    public String name() {
-        return ChatColor.BLUE + "Select new owner";
-    }
-
-    @Override
-    public void manageClicks(InventoryClickEvent e) {
-
-        e.setCancelled(true);
-
-        String displayName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
-
-        switch (displayName){
-
-            case "Back" -> new WarpOpt(player, warpFile, warp.getName(), new ItemStack(Material.IRON_BARS)).open();
-            case "Next" -> {
-                if ((currentPage + 1) * 45 < onlinePlayers.size()) {
-                    currentPage++;
-                    player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
-                    fill();
-                }
-            }
-            case "Previous" -> {
-                if (currentPage > 0) {
-                    currentPage--;
-                    player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
-                    fill();
-                }
-            }
-            default -> new ConfirmGUI(player, warpFile, ChatColor.AQUA + "Hand over", warp.getName(), displayName).open();
-        }
-
     }
 
     @Override
@@ -77,25 +40,22 @@ public class HandoverToPlayer extends WarpMenu{
         inventory.clear();
         optionBar();
         for (int i = 0; i < 45; i++) {
-
             int index = currentPage * 45 + i;
-
-            if (index >= onlinePlayers.size())
-                break;
+            if (index >= onlinePlayers.size()) break;
 
             Player onlinePlayer = onlinePlayers.get(index);
-
             ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
             SkullMeta skullMeta = (SkullMeta) playerHead.getItemMeta();
             skullMeta.setOwningPlayer(onlinePlayer);
             skullMeta.setDisplayName(ChatColor.GREEN + onlinePlayer.getName());
-            skullMeta.setLore(new ArrayList<>(List.of("Click to hand this ", "warp over to " + onlinePlayer.getName())));
+            skullMeta.setLore(getPlayerHeadLore(onlinePlayer));
             playerHead.setItemMeta(skullMeta);
 
             inventory.setItem(i, playerHead);
         }
     }
-    private void optionBar() {
+
+    protected void optionBar() {
         ItemStack filler = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
         ItemMeta m = filler.getItemMeta();
         Objects.requireNonNull(m).setDisplayName(" ");
@@ -127,6 +87,36 @@ public class HandoverToPlayer extends WarpMenu{
         metaLast.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Previous");
         lastPage.setItemMeta(metaLast);
         inventory.setItem(48, lastPage);
-
     }
+
+    protected abstract List<String> getPlayerHeadLore(Player player);
+
+    @Override
+    public void manageClicks(InventoryClickEvent e) {
+        e.setCancelled(true);
+        String displayName = ChatColor.stripColor(Objects.requireNonNull(e.getCurrentItem()).getItemMeta().getDisplayName());
+
+        switch (displayName) {
+            case "Back" -> handleBackClick();
+            case "Next" -> {
+                if ((currentPage + 1) * 45 < onlinePlayers.size()) {
+                    currentPage++;
+                    player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
+                    fill();
+                }
+            }
+            case "Previous" -> {
+                if (currentPage > 0) {
+                    currentPage--;
+                    player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
+                    fill();
+                }
+            }
+            default -> handlePlayerHeadClick(displayName);
+        }
+    }
+
+    protected abstract void handleBackClick();
+
+    protected abstract void handlePlayerHeadClick(String playerName);
 }

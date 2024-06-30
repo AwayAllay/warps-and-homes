@@ -26,11 +26,6 @@ public class OnInventoryClick implements Listener {
             WarpMenu menu = (WarpMenu) inventoryHolder;
             menu.manageClicks(event);
 
-        } /*else if (inventoryHolder instanceof WarpTextMenu) {
-
-            WarpTextMenu warpTextMenu = (WarpTextMenu) inventoryHolder;
-            warpTextMenu.manageClicks(event);
-
-        }*/
+        }
     }
 }

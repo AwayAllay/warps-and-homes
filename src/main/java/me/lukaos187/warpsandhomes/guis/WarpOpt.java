@@ -61,7 +61,7 @@ public class WarpOpt extends WarpMenu{
                 new WarpLock(warpFile).perform(player, args);
             }
 
-            case PLAYER_HEAD -> new HandoverToPlayer(player, warpFile, name).open();
+            case PLAYER_HEAD -> new HandoverGUI(player, warpFile, warpFile.getWarp(name)).open();
             case WRITTEN_BOOK -> new DescribeGUI(player, warpItem, warpFile.getWarp(name), warpFile).open();
             case ANVIL -> new RenameGUI(player, warpItem, warpFile.getWarp(name), warpFile).open();
         }
