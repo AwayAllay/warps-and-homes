@@ -1,11 +1,13 @@
 package me.lukaos187.warpsandhomes.commands.warpSubcommands;
 
+import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import me.lukaos187.warpsandhomes.util.Warp;
 import me.lukaos187.warpsandhomes.util.WarpFile;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -51,6 +53,14 @@ public class HandoverRequest implements Subcommand{
                 player.sendMessage(ChatColor.RED + "The owner is not online at the moment.");
                 return;
             }
+            if (warpOwner.equals(player)){
+                player.sendMessage(ChatColor.RED + "You can not send a request to yourself.");
+                return;
+            }
+            if (warp.isPrivate() && !WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warp-requests")){
+                player.sendMessage(ChatColor.RED + "You can not request a private warp!");
+                return;
+            }
 
             sendRequest(warpOwner, player, warp);
 
@@ -63,23 +73,42 @@ public class HandoverRequest implements Subcommand{
 
     private void sendRequest(final Player warpOwner, final Player player, final Warp warp) {
 
-        TextComponent in = new TextComponent("Click if you want to ");
+        TextComponent message = new TextComponent("Click if you want to ");
         TextComponent mid = new TextComponent(" this offer or ");
         TextComponent last = new TextComponent(" the request.");
 
-        TextComponent accept = new TextComponent("accept");
+        TextComponent accept = new TextComponent(ChatColor.UNDERLINE + "accept");
         accept.setColor(net.md_5.bungee.api.ChatColor.GREEN);
         accept.setBold(true);
         accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/accept " + player.getName() + warp.getName()));
 
-        TextComponent reject = new TextComponent("reject");
+        TextComponent reject = new TextComponent(ChatColor.UNDERLINE + "reject");
         reject.setColor(net.md_5.bungee.api.ChatColor.RED);
         reject.setBold(true);
         reject.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reject " + player.getName() + warpOwner.getName()));
 
-        warpOwner.sendMessage(ChatColor.AQUA + player.getName() + " requests your warp: " + warp.getName());
-        warpOwner.sendMessage();
+        message.addExtra(accept);
+        message.addExtra(mid);
+        message.addExtra(reject);
+        message.addExtra(last);
 
+        sendMessage(message, player, warpOwner, warp);
+
+    }
+
+    private void sendMessage(final TextComponent message, final Player player, final Player warpOwner, final Warp warp) {
+        String header = "-------------[WarpsAndHomes-Request]-------------";
+        String coloredH = "-------------[" + ChatColor.GREEN + "WarpsAndHomes-Request" + ChatColor.RESET + "]-------------";
+        String footer = "-".repeat(header.length());
+
+        warpOwner.sendMessage(coloredH);
+        warpOwner.sendMessage(ChatColor.AQUA + player.getName() + ChatColor.RESET + " requests your warp: " + warp.getName());
+        warpOwner.playSound(warpOwner, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 9F, 3F);
+        warpOwner.spigot().sendMessage(message);
+        warpOwner.sendMessage(footer);
+
+        player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
+        player.sendMessage(ChatColor.GREEN + "Request" + ChatColor.RESET + " was sent to " + warpOwner.getName());
     }
 
     @Override
@@ -112,8 +141,22 @@ public class HandoverRequest implements Subcommand{
 
             List<String> owningWarps = warpFile.getWarps(online);
 
-            if (owningWarps != null)
-                warps.addAll(owningWarps);
+            if (owningWarps != null){
+
+                if (!WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warp-requests")){
+
+                    owningWarps.forEach(w -> {
+
+                            Warp warp = warpFile.getWarp(w);
+                            if (!warp.isPrivate())
+                                warps.add(w);
+                    });
+
+                }else {
+                    warps.addAll(owningWarps);
+                }
+
+            }
         });
 
         return warps;

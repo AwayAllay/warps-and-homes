@@ -24,6 +24,9 @@ allow-warp-listing: true #Allows players to list all their warps, or the public 
 allow-warp-renaming: true #Allows players to rename their warp
 allow-warp-updating: true #Allows players to update their warp to a new location
 allow-warp-clearing: true #Allows players to clear all their warps at once
+allow-warp-requests: true #Allows players to send a request for the ownership of a warp to the current warp owner
+allow-private-warp-requests: false #Allows players to request private warps of other players
+
 enable-max-player-warps: false #En-/Disables if a player has a limited amount of warps
 max-player-warps: 10 #If enable-max-player-warps: true this is the max amount of warps a player can have
 allow-crossdimentional-warping: true #Allows players to warp to warps that are in another dimension

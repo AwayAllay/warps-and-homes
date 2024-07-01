@@ -53,6 +53,9 @@ public class SubcommandAdder {
 
         if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-warp-clearing"))
             subcommands.add(new WarpClear(warpFile));
+
+        if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-warp-requests"))
+            subcommands.add(new HandoverRequest(warpFile));
     }
 
     public List<Subcommand> getSubcommands() {
