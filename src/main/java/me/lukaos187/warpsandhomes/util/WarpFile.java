@@ -10,6 +10,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -148,7 +149,9 @@ public class WarpFile {
         return null;
     }
 
-    /**Returns a List<String> of all the warp-names that the given player owns */
+    /**Returns a List<String> of all the warp-names that the given player owns. Returns null if the players does not own a
+     * warp yet. */
+    @Nullable
     public List<String> getWarps(final Player player) {
 
         PersistentDataContainer data = player.getPersistentDataContainer();
