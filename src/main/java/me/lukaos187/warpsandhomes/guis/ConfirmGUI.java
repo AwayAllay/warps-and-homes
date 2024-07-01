@@ -56,7 +56,7 @@ public class ConfirmGUI extends WarpMenu {
             confirmAction();
 
         }
-        new MyWarps(player, warpFile).open();
+        new PaginatedWarpsGUI(player, warpFile).open();
 
     }
 

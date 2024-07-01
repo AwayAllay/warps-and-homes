@@ -25,7 +25,7 @@ public class OtherPlayersGUI extends PaginatedPlayerListGUI{
 
     @Override
     protected void handlePlayerHeadClick(String playerName) {
-        new PublicWarpsOnlinePlayerGUI(player, warpFile, Bukkit.getPlayer(playerName)).open();
+        new PaginatedWarpsGUI(player, warpFile, Bukkit.getPlayer(playerName)).open();
     }
 
     @Override

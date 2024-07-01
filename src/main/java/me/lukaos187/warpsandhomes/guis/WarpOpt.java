@@ -41,7 +41,7 @@ public class WarpOpt extends WarpMenu{
         e.setCancelled(true);
         switch (Objects.requireNonNull(e.getCurrentItem()).getType()){
 
-            case BARRIER -> new MyWarps(player, warpFile).open();
+            case BARRIER -> new PaginatedWarpsGUI(player, warpFile).open();
 
             case END_PORTAL_FRAME -> {
                 player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);

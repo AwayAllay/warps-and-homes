@@ -16,36 +16,57 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MyWarps extends WarpMenu {
+public class PaginatedWarpsGUI extends WarpMenu{
 
+    private final Player target;
 
     private int currentPage = 0;
     private final List<Warp> warps = new ArrayList<>();
 
-    public MyWarps(Player player, WarpFile warpFile) {
-        super(player, warpFile);
+    public PaginatedWarpsGUI(Player inventoryOwner, WarpFile warpFile) {
+        super(inventoryOwner, warpFile);
+        target = null;
 
         List<String> warpNames = warpFile.getWarps(player);
+
         warpNames.forEach(s -> {
+
             Warp warp = warpFile.getWarp(s);
             if (warp != null)
+                warps.add(warp);
+
+        });
+    }
+
+    public PaginatedWarpsGUI(Player player, WarpFile warpFile, Player target) {
+        super(player, warpFile);
+        this.target = target;
+
+        List<String> warpNames = warpFile.getWarps(target);
+        warpNames.forEach(s -> {
+            Warp warp = warpFile.getWarp(s);
+            if (warp != null && !warp.isPrivate())
                 warps.add(warp);
         });
     }
 
     @Override
     public int slots() {
-        return 9 * 6;
+        return 9*6;
     }
 
     @Override
     public String name() {
-        return ChatColor.RED + "My Warps";
+
+        if (target == null){
+            return ChatColor.RED + "My Warps";
+        }else {
+            return ChatColor.DARK_GRAY + "Public warps of " + target.getName();
+        }
     }
 
     @Override
     public void manageClicks(InventoryClickEvent e) {
-
         e.setCancelled(true);
 
         ItemStack currentItem = e.getCurrentItem();
@@ -67,8 +88,20 @@ public class MyWarps extends WarpMenu {
                     fill();
                 }
             }
-            case "Back" -> new WarpChoice(player, warpFile).open();
-            default -> new WarpOpt(player, warpFile, displayName, currentItem).open();
+            case "Back" -> {
+                if (target == null){
+                    new WarpChoice(player, warpFile).open();
+                }else {
+                    new OtherPlayersGUI(player, warpFile).open();
+                }
+            }
+            default -> {
+                if (target == null){
+                    new WarpOpt(player, warpFile, displayName, currentItem).open();
+                }else {
+                    //TODO Options of other warps
+                }
+            }
         }
     }
 
@@ -92,8 +125,6 @@ public class MyWarps extends WarpMenu {
 
             inventory.setItem(i, warpItem);
         }
-
-
     }
 
     private ItemStack getWarpItem(final Warp warp) {
@@ -125,23 +156,31 @@ public class MyWarps extends WarpMenu {
         }
 
         return addMeta(warpItem, warp);
+
     }
 
     private ItemStack addMeta(final ItemStack warpItem, final Warp warp) {
+
         ItemMeta meta = warpItem.getItemMeta();
         Objects.requireNonNull(meta).setDisplayName(ChatColor.AQUA + warp.getName());
 
-        String s = warp.isPrivate() ? ChatColor.RED + "private" : ChatColor.GREEN + "public";
 
         List<String> lore = new ArrayList<>();
         lore.add(ChatColor.GRAY + "Location: " + ChatColor.GOLD + Math.round(warp.getLocation().getX()) +
                 " " + Math.round(warp.getLocation().getY()) + " " + Math.round(warp.getLocation().getZ()));
         lore.add(ChatColor.GRAY + "Dimension: " + ChatColor.GREEN + Objects.requireNonNull(warp.getLocation().getWorld()).getEnvironment());
-        lore.add(ChatColor.GRAY + "Privacy: " + s);
+        if (warp.isPrivate()){
+            lore.add(ChatColor.GRAY + "Privacy: " + ChatColor.RED + "private");
+        }else {
+            lore.add(ChatColor.GRAY + "Privacy: " + ChatColor.GREEN + "public");
+        }
+        lore.add(ChatColor.AQUA + "" + ChatColor.BOLD + "Description: ");
+        lore.add(ChatColor.WHITE + warp.getDescription());
 
         meta.setLore(lore);
         warpItem.setItemMeta(meta);
         return warpItem;
+
     }
 
     private void optionBar() {
@@ -176,6 +215,5 @@ public class MyWarps extends WarpMenu {
         metaLast.setDisplayName(ChatColor.GREEN + "" + ChatColor.BOLD + "Previous");
         lastPage.setItemMeta(metaLast);
         inventory.setItem(48, lastPage);
-
     }
 }
