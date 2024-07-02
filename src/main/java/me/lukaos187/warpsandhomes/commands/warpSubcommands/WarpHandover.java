@@ -4,6 +4,7 @@ import me.lukaos187.warpsandhomes.util.Warp;
 import me.lukaos187.warpsandhomes.util.WarpFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class WarpHandover implements Subcommand{
             removeWarp(player, newOwner, warp);
 
             player.sendMessage(ChatColor.AQUA + warp.getName() + ChatColor.RESET + " is now handed over to "
-                    + ChatColor.AQUA + newOwner.getName());
+                    + ChatColor.DARK_GRAY + newOwner.getName());
 
 
         }else {
@@ -73,7 +74,7 @@ public class WarpHandover implements Subcommand{
         }
 
         if (Bukkit.getPlayer(args[2]) == null){
-            player.sendMessage(ChatColor.RED + "This player has to e online.");
+            player.sendMessage(ChatColor.RED + "This player has to be online.");
             return false;
         }
 
@@ -97,6 +98,8 @@ public class WarpHandover implements Subcommand{
         warpFile.removeWarpFromPDC(player, warp);
         warpFile.addWarpToPDC(warp, newOwner);
 
+        newOwner.playSound(newOwner, Sound.UI_TOAST_CHALLENGE_COMPLETE, 5F, 2F);
+        newOwner.sendMessage(ChatColor.DARK_GRAY + player.getName() + ChatColor.RESET + " just gave you the ownership of the warp " + ChatColor.AQUA + warp.getName());
     }
 
     @Override

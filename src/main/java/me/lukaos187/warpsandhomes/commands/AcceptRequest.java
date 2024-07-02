@@ -1,42 +1,108 @@
 package me.lukaos187.warpsandhomes.commands;
 
+import me.lukaos187.warpsandhomes.commands.warpSubcommands.Subcommand;
+import me.lukaos187.warpsandhomes.commands.warpSubcommands.WarpHandover;
+import me.lukaos187.warpsandhomes.util.PlayerUtils;
 import me.lukaos187.warpsandhomes.util.Warp;
 import me.lukaos187.warpsandhomes.util.WarpFile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
-public class AcceptRequest extends BukkitCommand {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AcceptRequest implements Subcommand {
 
     private final WarpFile warpFile;
 
-    protected AcceptRequest(@NotNull String name, WarpFile warpFile) {
-        super(name);
+    public AcceptRequest(WarpFile warpFile) {
         this.warpFile = warpFile;
     }
+
     @Override
-    public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
+    public String getName() {
+        return "accept";
+    }
 
-        if (!(sender instanceof Player player)){
-            sender.sendMessage(ChatColor.RED + "You have to be a player to execute this!");
-            return true;
+    @Override
+    public String getDescription() {
+        return "Accepts to hand the ownership of a warp over to another player";
+    }
+
+    @Override
+    public String getUsage() {
+        return "/warp accept <warp-name> <player-name>";
+    }
+
+    // requester -> /warp request ....
+    //text message
+    // owner -> accept
+    // owner -> /warp accept + warp.getName() + requester.name
+    @Override
+    public void perform(Player owner, String[] args) {
+
+        if (args.length > 2){
+
+            Player requester = Bukkit.getPlayer(args[2]);
+            Warp warp = warpFile.getWarp(args[1]);
+
+            if (requester == null || warp == null) {
+                owner.sendMessage(ChatColor.RED + "Please try again.");
+                owner.sendMessage("Use the command like this: " + ChatColor.AQUA + "/warp accept <warpName> <requesterName>");
+                return;
+            }
+
+            if (!warp.getOwner().equals(owner)){
+                requester.sendMessage(ChatColor.RED + "You can not accept the requests of other people!");
+                return;
+            }
+
+            handover(warp.getName(), requester.getName(), owner);
+
+
+        } else if (args.length == 2) {
+            owner.sendMessage(ChatColor.RED + "Please provide a name for the warp you want to hand over.");
+            owner.sendMessage("Use the command like this: " + ChatColor.AQUA + "/warp accept <warpName> <requesterName>");
+        } else {
+            owner.sendMessage(ChatColor.RED + "Please provide a name for the requester you want to hand over to and a warp.");
+            owner.sendMessage("Use the command like this: " + ChatColor.AQUA + "/warp accept <warpName> <requesterName>");
         }
 
-        Player oldOwner = player;
-        Player requester = Bukkit.getPlayer(args[0]);
-        Warp warp = warpFile.getWarp(args[1]);
+    }
 
-        if (requester == null || warp == null) {
-            sender.sendMessage(ChatColor.RED + "Please try again.");
-            return true;
+    private void handover(final String warpName, final String newOwner, final Player owner) {
+
+        String[]args = {"hand-over" ,warpName, newOwner};
+
+        owner.playSound(owner, Sound.UI_TOAST_CHALLENGE_COMPLETE, 5F, 2F);
+
+        new WarpHandover(warpFile).perform(owner, args);
+
+    }
+
+    @Override
+    public List<String> getArgs(int argsLength, Player player) {
+
+        if (argsLength == 1){
+            return new ArrayList<>(List.of("accept"));
+
+        } else if (argsLength == 2) {
+            List<String> warps = warpFile.getWarps(player);
+
+            if (warps == null)
+                return null;
+
+            return warps;
+        }else if (argsLength == 3){
+
+            List<String> playerNames = new ArrayList<>();
+            Bukkit.getOnlinePlayers().forEach(online ->  playerNames.add(online.getName()));
+
+            return playerNames;
         }
 
-        //TODO finish me
-        player.sendMessage("Accept");
-
-        return false;
+        return null;
     }
 }

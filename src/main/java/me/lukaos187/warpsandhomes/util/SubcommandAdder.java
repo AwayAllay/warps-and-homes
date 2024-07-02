@@ -1,6 +1,8 @@
 package me.lukaos187.warpsandhomes.util;
 
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
+import me.lukaos187.warpsandhomes.commands.AcceptRequest;
+import me.lukaos187.warpsandhomes.commands.RejectRequest;
 import me.lukaos187.warpsandhomes.commands.warpSubcommands.*;
 
 import java.util.ArrayList;
@@ -56,6 +58,11 @@ public class SubcommandAdder {
 
         if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-warp-requests"))
             subcommands.add(new HandoverRequest(warpFile));
+
+        if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-warp-requests")) {
+            subcommands.add(new AcceptRequest(warpFile));
+            subcommands.add(new RejectRequest(warpFile));
+        }
     }
 
     public List<Subcommand> getSubcommands() {

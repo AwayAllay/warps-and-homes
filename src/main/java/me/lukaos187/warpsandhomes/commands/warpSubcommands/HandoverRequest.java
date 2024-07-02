@@ -71,7 +71,7 @@ public class HandoverRequest implements Subcommand{
         }
     }
 
-    private void sendRequest(final Player warpOwner, final Player player, final Warp warp) {
+    private void sendRequest(final Player warpOwner, final Player requester, final Warp warp) {
 
         TextComponent message = new TextComponent("Click if you want to ");
         TextComponent mid = new TextComponent(" this offer or ");
@@ -80,19 +80,19 @@ public class HandoverRequest implements Subcommand{
         TextComponent accept = new TextComponent(ChatColor.UNDERLINE + "accept");
         accept.setColor(net.md_5.bungee.api.ChatColor.GREEN);
         accept.setBold(true);
-        accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/accept " + player.getName() + warp.getName()));
+        accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/warp accept " + warp.getName() + " " + requester.getName()));
 
         TextComponent reject = new TextComponent(ChatColor.UNDERLINE + "reject");
         reject.setColor(net.md_5.bungee.api.ChatColor.RED);
         reject.setBold(true);
-        reject.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reject " + player.getName() + warpOwner.getName()));
+        reject.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reject " + requester.getName() + warpOwner.getName()));
 
         message.addExtra(accept);
         message.addExtra(mid);
         message.addExtra(reject);
         message.addExtra(last);
 
-        sendMessage(message, player, warpOwner, warp);
+        sendMessage(message, requester, warpOwner, warp);
 
     }
 
@@ -102,7 +102,7 @@ public class HandoverRequest implements Subcommand{
         String footer = "-".repeat(header.length());
 
         warpOwner.sendMessage(coloredH);
-        warpOwner.sendMessage(ChatColor.AQUA + player.getName() + ChatColor.RESET + " requests your warp: " + warp.getName());
+        warpOwner.sendMessage(ChatColor.DARK_GRAY + player.getName() + ChatColor.RESET + " requests your warp: " + warp.getName());
         warpOwner.playSound(warpOwner, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 9F, 3F);
         warpOwner.spigot().sendMessage(message);
         warpOwner.sendMessage(footer);
