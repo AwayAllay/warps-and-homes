@@ -12,7 +12,7 @@ public class PlayerUtils {
     private static Map<UUID, List<Color>> skinColors = new HashMap<>();
     private static Map<UUID, Long> lastDamage = new HashMap<>();
     private static Map<UUID, Long> cooldown = new HashMap<>();
-    //private static Map<String, List<UUID>> requests = new HashMap<>();
+    private static Map<Warp, List<UUID>> requests = new HashMap<>();
 
     public static Map<UUID, Long> getLastDamage() {
         return lastDamage;
@@ -26,7 +26,7 @@ public class PlayerUtils {
         return cooldown;
     }
 
-   /* public static Map<String, List<UUID>> getRequests() {
+    public static Map<Warp, List<UUID>> getRequests() {
         return requests;
-    }*/ //TODO implement this!!!
+    }
 }

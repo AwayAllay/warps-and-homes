@@ -45,6 +45,10 @@ public class RejectRequest implements Subcommand {
                 player.sendMessage("Use the command like this: " + ChatColor.AQUA + "/warp reject <warpName> <requesterName>");
                 return;
             }
+            if (!warp.getOwner().equals(player)){
+                requester.sendMessage(ChatColor.RED + "You can not reject the requests of other people!");
+                return;
+            }
 
             reject(warp.getName(), requester, player);
 

@@ -1,6 +1,7 @@
 package me.lukaos187.warpsandhomes.commands.warpSubcommands;
 
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
+import me.lukaos187.warpsandhomes.util.PlayerUtils;
 import me.lukaos187.warpsandhomes.util.Warp;
 import me.lukaos187.warpsandhomes.util.WarpFile;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -10,8 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class HandoverRequest implements Subcommand{
 
@@ -73,6 +73,9 @@ public class HandoverRequest implements Subcommand{
 
     private void sendRequest(final Player warpOwner, final Player requester, final Warp warp) {
 
+        if (!manageRequest(warpOwner, requester, warp))
+            return;
+
         TextComponent message = new TextComponent("Click if you want to ");
         TextComponent mid = new TextComponent(" this offer or ");
         TextComponent last = new TextComponent(" the request.");
@@ -94,6 +97,10 @@ public class HandoverRequest implements Subcommand{
 
         sendMessage(message, requester, warpOwner, warp);
 
+    }
+
+    private boolean manageRequest(final Player warpOwner, final Player requester, final Warp warp) {
+        return true;
     }
 
     private void sendMessage(final TextComponent message, final Player player, final Player warpOwner, final Warp warp) {
