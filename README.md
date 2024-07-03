@@ -3,7 +3,11 @@ _Description and features coming soon!_
 
 **Check my github profile [here](https://github.com/AwayAllay).**
 
-## Overview
+## Features
+_A detailed list of all features will be published as the plugin is finished_
+
+
+## Table of contents
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
