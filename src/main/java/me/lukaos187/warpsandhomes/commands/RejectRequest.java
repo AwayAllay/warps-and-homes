@@ -9,6 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class RejectRequest implements Subcommand {
 
@@ -50,7 +52,7 @@ public class RejectRequest implements Subcommand {
                 return;
             }
 
-            reject(warp.getName(), requester, player);
+            reject(warp, requester, player);
 
 
         } else if (args.length == 2) {
@@ -62,11 +64,22 @@ public class RejectRequest implements Subcommand {
         }
     }
 
-    private void reject(final String warpName, final Player requester, final Player owner) {
+    private void reject(final Warp warp, final Player requester, final Player owner) {
 
         owner.sendMessage(ChatColor.RED + "Rejected " + ChatColor.RESET + "the request of " + ChatColor.DARK_GRAY + requester.getName());
-        requester.sendMessage(ChatColor.DARK_GRAY + owner.getName() + ChatColor.RED + " rejected " + ChatColor.RESET + "your request for " + warpName);
-        return;
+        requester.sendMessage(ChatColor.DARK_GRAY + owner.getName() + ChatColor.RED + " rejected " + ChatColor.RESET + "your request for " + warp.getName());
+        manageReject(requester, warp);
+    }
+    private void manageReject(final Player requester, final Warp warp) {
+
+        Map<UUID, Long> pTR = PlayerUtils.getRequests().get(warp);
+        if (pTR == null)
+            return;
+
+        if (!pTR.containsKey(requester.getUniqueId()))
+            return;
+
+        pTR.remove(requester.getUniqueId());
     }
 
     @Override

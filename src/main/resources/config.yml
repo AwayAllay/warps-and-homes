@@ -30,6 +30,7 @@ allow-private-warp-requests: false #Allows players to request private warps of o
 enable-max-player-warps: false #En-/Disables if a player has a limited amount of warps
 max-player-warps: 10 #If enable-max-player-warps: true this is the max amount of warps a player can have
 allow-crossdimentional-warping: true #Allows players to warp to warps that are in another dimension
+
 #WARP-COOLDOWNS
 warp-cooldown: false #En-/Disables if warping has a cooldown
 cooldown-time: 5 #The cooldown time in seconds
@@ -37,6 +38,9 @@ cooldown-time: 5 #The cooldown time in seconds
 has-damage-warp-cooldown: false #En-/Disables if players have to wait before warping, if they were damaged
 damage-cooldown-player: true #Cooldown only if a player is damaged by another player
 damage-warp-cooldown: 5 #Cooldown for damage cooldown in seconds
+
+has-request-cooldown: true #Cooldown for sending a warp request to a player.
+request-cooldown: 300 #Request cooldown time in seconds (if has-request-cooldown: true)
 #-------------------------------------------------------------------
 
 

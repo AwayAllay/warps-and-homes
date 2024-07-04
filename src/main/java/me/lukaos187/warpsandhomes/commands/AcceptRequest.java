@@ -12,6 +12,8 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class AcceptRequest implements Subcommand {
 
@@ -59,7 +61,7 @@ public class AcceptRequest implements Subcommand {
                 return;
             }
 
-            handover(warp.getName(), requester.getName(), owner);
+            handover(warp, requester, owner);
 
 
         } else if (args.length == 2) {
@@ -72,13 +74,26 @@ public class AcceptRequest implements Subcommand {
 
     }
 
-    private void handover(final String warpName, final String newOwner, final Player owner) {
+    private void handover(final Warp warp, final Player newOwner, final Player owner) {
 
-        String[]args = {"hand-over" ,warpName, newOwner};
+        String[]args = {"hand-over" ,warp.getName(), newOwner.getName()};
 
         owner.playSound(owner, Sound.UI_TOAST_CHALLENGE_COMPLETE, 5F, 2F);
 
         new WarpHandover(warpFile).perform(owner, args);
+        manageAccept(newOwner, warp);
+    }
+
+    private void manageAccept(final Player newOwner, final Warp warp) {
+
+        Map<UUID, Long> pTR = PlayerUtils.getRequests().get(warp);
+        if (pTR == null)
+            return;
+
+        if (!pTR.containsKey(newOwner.getUniqueId()))
+            return;
+
+        pTR.remove(newOwner.getUniqueId());
 
     }
 

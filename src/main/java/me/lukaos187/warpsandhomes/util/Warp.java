@@ -3,6 +3,9 @@ package me.lukaos187.warpsandhomes.util;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nonnull;
+import java.util.Objects;
+
 public class Warp {
 
     private String name;
@@ -11,8 +14,8 @@ public class Warp {
     private boolean isPrivate;
     private Location location;
 
-    public Warp(String name, String description, Player owner, boolean isPrivate, Location location) {
-        this.name = name;
+    public Warp(@Nonnull String name, String description, Player owner, boolean isPrivate, Location location) {
+        this.name = Objects.requireNonNull(name);
         this.description = description;
         this.owner = owner;
         this.isPrivate = isPrivate;
@@ -68,5 +71,18 @@ public class Warp {
     /**Sets the location of the warp*/
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Warp warp = (Warp) o;
+        return name.equals(warp.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

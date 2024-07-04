@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import javax.print.DocFlavor;
 import java.util.*;
 
 public class HandoverRequest implements Subcommand{
@@ -73,7 +74,10 @@ public class HandoverRequest implements Subcommand{
 
     private void sendRequest(final Player warpOwner, final Player requester, final Warp warp) {
 
-        if (!manageRequest(warpOwner, requester, warp))
+        putRequest(requester, warp);
+
+
+        if (!manageRequest(requester, warp))
             return;
 
         TextComponent message = new TextComponent("Click if you want to ");
@@ -88,7 +92,7 @@ public class HandoverRequest implements Subcommand{
         TextComponent reject = new TextComponent(ChatColor.UNDERLINE + "reject");
         reject.setColor(net.md_5.bungee.api.ChatColor.RED);
         reject.setBold(true);
-        reject.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reject " + requester.getName() + warpOwner.getName()));
+        reject.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/warp " + "reject" + warp.getName() + requester.getName()));
 
         message.addExtra(accept);
         message.addExtra(mid);
@@ -99,7 +103,71 @@ public class HandoverRequest implements Subcommand{
 
     }
 
-    private boolean manageRequest(final Player warpOwner, final Player requester, final Warp warp) {
+    private void putRequest(final Player requester, final Warp warp) {
+
+        Map<UUID, Long> playerTimeRequests = PlayerUtils.getRequests().get(warp);
+
+
+        if (playerTimeRequests == null){
+
+            Map<UUID, Long> request = new HashMap<>();
+
+            request.put(requester.getUniqueId(), System.currentTimeMillis());
+
+
+            PlayerUtils.getRequests().put(warp, request);
+
+        }else {
+
+            if (!playerTimeRequests.containsKey(requester.getUniqueId())){
+
+                playerTimeRequests.put(requester.getUniqueId(), System.currentTimeMillis());
+
+
+            }
+
+        }
+
+    }
+
+    private boolean manageRequest(final Player requester, final Warp warp) {
+        try {
+
+            if (PlayerUtils.getRequests().get(warp).containsKey(requester.getUniqueId())) {
+
+                long currentTime = System.currentTimeMillis();
+                System.out.println(currentTime);
+                long l = PlayerUtils.getRequests().get(warp).get(requester.getUniqueId());
+                System.out.println(l);
+                long elapsed = (currentTime - l) / 1000;
+                System.out.println(elapsed);
+
+                if (WarpsAndHomes.getPlugin().getConfig().getBoolean("has-request-cooldown")) {
+
+                    long cooldown = WarpsAndHomes.getPlugin().getConfig().getLong("request-cooldown");
+
+                    if (elapsed >= cooldown) {
+                        PlayerUtils.getRequests().get(warp).remove(requester.getUniqueId());
+                        putRequest(requester, warp);
+                        return true;
+
+                    } else {
+
+                        requester.sendMessage(ChatColor.RED + "You have already sent a request for this warp");
+                        requester.sendMessage(ChatColor.RED + "Please try again in " + ChatColor.DARK_GRAY + (cooldown - elapsed) + ChatColor.RESET + " seconds.");
+                        return false;
+                    }
+
+                } else {
+                    return true;
+                }
+
+
+            }
+        }catch (NullPointerException e){
+            return true;
+        }
+
         return true;
     }
 
