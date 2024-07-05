@@ -5,13 +5,14 @@ import me.lukaos187.warpsandhomes.util.PlayerUtils;
 import me.lukaos187.warpsandhomes.util.Warp;
 import me.lukaos187.warpsandhomes.util.WarpFile;
 import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
-import javax.print.DocFlavor;
 import java.util.*;
 
 public class HandoverRequest implements Subcommand{
@@ -74,8 +75,7 @@ public class HandoverRequest implements Subcommand{
 
     private void sendRequest(final Player warpOwner, final Player requester, final Warp warp) {
 
-        putRequest(requester, warp);
-
+        checkRequests(warp);
 
         if (!manageRequest(requester, warp))
             return;
@@ -84,15 +84,26 @@ public class HandoverRequest implements Subcommand{
         TextComponent mid = new TextComponent(" this offer or ");
         TextComponent last = new TextComponent(" the request.");
 
+
         TextComponent accept = new TextComponent(ChatColor.UNDERLINE + "accept");
         accept.setColor(net.md_5.bungee.api.ChatColor.GREEN);
         accept.setBold(true);
+
+        Text hoverTextAccept = new Text(ChatColor.GREEN + "Hand over the ownership.");
+        HoverEvent hoverAccept = new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverTextAccept);
+        accept.setHoverEvent(hoverAccept);
         accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/warp accept " + warp.getName() + " " + requester.getName()));
+
 
         TextComponent reject = new TextComponent(ChatColor.UNDERLINE + "reject");
         reject.setColor(net.md_5.bungee.api.ChatColor.RED);
         reject.setBold(true);
-        reject.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/warp " + "reject" + warp.getName() + requester.getName()));
+
+        Text hoverTextReject = new Text(ChatColor.RED + "Reject the request.");
+        HoverEvent hoverReject = new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverTextReject);
+        reject.setHoverEvent(hoverReject);
+
+        reject.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/warp " + "reject " + warp.getName() + " " + requester.getName()));
 
         message.addExtra(accept);
         message.addExtra(mid);
@@ -103,35 +114,28 @@ public class HandoverRequest implements Subcommand{
 
     }
 
-    private void putRequest(final Player requester, final Warp warp) {
+    private void checkRequests(final Warp warp) {
 
         Map<UUID, Long> playerTimeRequests = PlayerUtils.getRequests().get(warp);
 
 
-        if (playerTimeRequests == null){
-
+        if (playerTimeRequests == null) {
             Map<UUID, Long> request = new HashMap<>();
-
-            request.put(requester.getUniqueId(), System.currentTimeMillis());
-
-
             PlayerUtils.getRequests().put(warp, request);
+        }
+    }
 
-        }else {
+    private void putInRequests(final Player requester, final Warp warp){
 
-            if (!playerTimeRequests.containsKey(requester.getUniqueId())){
+        Map<UUID, Long> playerTimeRequests = PlayerUtils.getRequests().get(warp);
 
-                playerTimeRequests.put(requester.getUniqueId(), System.currentTimeMillis());
-
-
-            }
-
+        if (!playerTimeRequests.containsKey(requester.getUniqueId())){
+            playerTimeRequests.put(requester.getUniqueId(), System.currentTimeMillis());
         }
 
     }
 
     private boolean manageRequest(final Player requester, final Warp warp) {
-        try {
 
             if (PlayerUtils.getRequests().get(warp).containsKey(requester.getUniqueId())) {
 
@@ -148,13 +152,11 @@ public class HandoverRequest implements Subcommand{
 
                     if (elapsed >= cooldown) {
                         PlayerUtils.getRequests().get(warp).remove(requester.getUniqueId());
-                        putRequest(requester, warp);
+                        putInRequests(requester, warp);
                         return true;
 
                     } else {
-
-                        requester.sendMessage(ChatColor.RED + "You have already sent a request for this warp");
-                        requester.sendMessage(ChatColor.RED + "Please try again in " + ChatColor.DARK_GRAY + (cooldown - elapsed) + ChatColor.RESET + " seconds.");
+                        requester.sendMessage(ChatColor.RED + "You can send a request again in " + ChatColor.DARK_GRAY + (cooldown - elapsed) + ChatColor.RESET + " seconds.");
                         return false;
                     }
 
@@ -163,10 +165,9 @@ public class HandoverRequest implements Subcommand{
                 }
 
 
+            }else {
+                putInRequests(requester, warp);
             }
-        }catch (NullPointerException e){
-            return true;
-        }
 
         return true;
     }

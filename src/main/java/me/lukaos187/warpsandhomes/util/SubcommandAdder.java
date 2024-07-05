@@ -19,7 +19,6 @@ public class SubcommandAdder {
 
     public void reloadSubs(final WarpFile warpFile) {
 
-        //TODO implement in Interface
         if (!subcommands.isEmpty())
             subcommands.clear();
 

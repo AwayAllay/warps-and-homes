@@ -57,7 +57,7 @@ public class AcceptRequest implements Subcommand {
             }
 
             if (!warp.getOwner().equals(owner)){
-                requester.sendMessage(ChatColor.RED + "You can not accept the requests of other people!");
+                owner.sendMessage(ChatColor.RED + "You can not accept the requests of other people!");
                 return;
             }
 
@@ -76,25 +76,29 @@ public class AcceptRequest implements Subcommand {
 
     private void handover(final Warp warp, final Player newOwner, final Player owner) {
 
+        if(!manageAccept(newOwner, warp, owner)){
+            owner.sendMessage(ChatColor.RED + "This request is already answered.");
+            return;
+        }
+
         String[]args = {"hand-over" ,warp.getName(), newOwner.getName()};
 
         owner.playSound(owner, Sound.UI_TOAST_CHALLENGE_COMPLETE, 5F, 2F);
 
         new WarpHandover(warpFile).perform(owner, args);
-        manageAccept(newOwner, warp);
     }
 
-    private void manageAccept(final Player newOwner, final Warp warp) {
+    private boolean manageAccept(final Player requester, final Warp warp, final Player owner) {
 
         Map<UUID, Long> pTR = PlayerUtils.getRequests().get(warp);
         if (pTR == null)
-            return;
+            return false;
 
-        if (!pTR.containsKey(newOwner.getUniqueId()))
-            return;
+        if (!pTR.containsKey(requester.getUniqueId()))
+            return false;
 
-        pTR.remove(newOwner.getUniqueId());
-
+        pTR.remove(requester.getUniqueId());
+        return true;
     }
 
     @Override
