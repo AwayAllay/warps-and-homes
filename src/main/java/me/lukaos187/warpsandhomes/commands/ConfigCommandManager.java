@@ -51,6 +51,10 @@ public class ConfigCommandManager implements TabExecutor {
         subcommands.add(new ConfigSetCooldown(warpFile, subAdder));
         subcommands.add(new ConfigWarpSound(warpFile, subAdder));
         subcommands.add(new ConfigWarpRequest(warpFile, subAdder));
+        subcommands.add(new ConfigWarpRequest(warpFile, subAdder));
+        subcommands.add(new ConfigAllowPrivateRequests(warpFile, subAdder));
+        subcommands.add(new ConfigHasRequestCooldown(warpFile, subAdder));
+        subcommands.add(new ConfigSetRequestCooldown(warpFile, subAdder));
     }
 
 
