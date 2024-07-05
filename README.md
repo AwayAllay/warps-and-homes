@@ -3,15 +3,15 @@ _Description and features coming soon!_
 
 **Check my github profile [here](https://github.com/AwayAllay).**
 
-## Features
-_A detailed list of all features will be published as the plugin is finished_
-
-
 ## Table of contents
+- [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Current](#current)
 
+## Features
+_A detailed list of all features will be published as soon as the plugin is finished_
 
 ## Requirements
 
@@ -24,7 +24,7 @@ _A detailed list of all features will be published as the plugin is finished_
 If you can't find a fitting version of this plugin for your server:
 
 - Download the nearest version of the plugin to your server version; most of the time, this will also work.
-- Create an issue in the Issues tab.
+- Create an issue in the [Issues tab](https://github.com/AwayAllay/warps-and-homes/issues).
 
 ## Installation
 
@@ -37,3 +37,6 @@ If you can't find a fitting version of this plugin for your server:
 
 ## Usage
 _Still in Development_
+
+## Current
+_Currently working on the final options in the WarpsAndHomes - GUI_
