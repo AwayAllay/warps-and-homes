@@ -46,7 +46,9 @@ public final class WarpsAndHomes extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("warp")).setExecutor(new WarpCommandManager(warpFile, subAdder));
         Objects.requireNonNull(getCommand("wahConfig")).setExecutor(new ConfigCommandManager(warpFile, subAdder));
-        Objects.requireNonNull(getCommand("warpMenu")).setExecutor(new OpenMenu(warpFile));
+
+        if (getConfig().getBoolean("allow-warp-gui-per-chat"))
+            Objects.requireNonNull(getCommand("warpMenu")).setExecutor(new OpenMenu(warpFile));
 
         getServer().getPluginManager().registerEvents(new OnJoin(warpFile), this);
         getServer().getPluginManager().registerEvents(new OnQuit(), this);

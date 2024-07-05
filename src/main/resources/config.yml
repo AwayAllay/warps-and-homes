@@ -6,7 +6,7 @@ allow-goodbye-and-hello-message: true #Enable this if you want confirmation for 
 allow-warp-animations: true #Enables animations during warp
 #allow-chat-warps: true #Enable if you want your players to warp per chat!!!!!!!!!!!!!!!!
 #allow-warp-gui: true #Allows if you want to have the warp gui!!!!!!!!!
-#allow-warp-gui-per-chat: true #If this is disabled, players will only be able to warp per gui with the warper!!!!!!!
+allow-warp-gui-per-chat: true #If this is disabled, players will only be able to warp per gui with the warper and can not open the GUI per chat.
 
 #Allows if players can craft a warper, which can open the warp-gui (Recommended with allow-warp-gui-per-chat: false and allow-chat-warps: false)
 #allow-warper: true!!!!!!!

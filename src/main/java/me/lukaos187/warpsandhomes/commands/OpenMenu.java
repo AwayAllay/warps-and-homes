@@ -1,8 +1,10 @@
 package me.lukaos187.warpsandhomes.commands;
 
+import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import me.lukaos187.warpsandhomes.guis.MainMenu;
 import me.lukaos187.warpsandhomes.guis.WarpMenu;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -26,6 +28,10 @@ public class OpenMenu implements TabExecutor {
 
         if (!(sender instanceof Player player)){
             sender.sendMessage("You have to be a player to open a menu!");
+            return true;
+        }
+        if (!WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-warp-gui-per-chat")){
+            sender.sendMessage(ChatColor.GRAY + "This was disabled by an operator.");
             return true;
         }
         new MainMenu(player, warpFile).open();
