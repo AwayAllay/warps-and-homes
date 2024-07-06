@@ -23,6 +23,7 @@ public class PaginatedWarpsGUI extends WarpMenu{
     private int currentPage = 0;
     private final List<Warp> warps = new ArrayList<>();
 
+    /**Constructor for the MyWarps-Menu (only the warps of the player)*/
     public PaginatedWarpsGUI(Player inventoryOwner, WarpFile warpFile) {
         super(inventoryOwner, warpFile);
         target = null;
@@ -38,6 +39,7 @@ public class PaginatedWarpsGUI extends WarpMenu{
         });
     }
 
+    /**Constructor for showing the warps of another player*/
     public PaginatedWarpsGUI(Player player, WarpFile warpFile, Player target) {
         super(player, warpFile);
         this.target = target;
@@ -99,7 +101,11 @@ public class PaginatedWarpsGUI extends WarpMenu{
                 if (target == null){
                     new WarpOpt(player, warpFile, displayName, currentItem).open();
                 }else {
-                    //TODO Options of other warps
+                    Warp warp = warpFile.getWarp(displayName);
+                    if (warp == null)
+                        return;
+
+                    new StrangerWarpGUI(player, warpFile, warp).open();
                 }
             }
         }
