@@ -8,7 +8,11 @@ _Description and features coming soon!_
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Commands](#commands)
+  - [GUI](#gui)
+  - [Config.yml](#configyml)
 - [Current](#current)
+- [License](#license)
 
 ## Features
 _A detailed list of all features will be published as soon as the plugin is finished_
@@ -37,6 +41,18 @@ If you can't find a fitting version of this plugin for your server:
 
 ## Usage
 _Still in Development_
+### Commands
+_Soon_
+### GUI
+_Soon_
+### Config.yml
+Detailed information about the individual settings can be found as comments in the 
+[config.yml](https://github.com/AwayAllay/warps-and-homes/blob/main/src/main/resources/config.yml) file. If you 
+still have any questions or issues, please create a issue in the [issues tab](https://github.com/AwayAllay/warps-and-homes/issues).
 
 ## Current
 _Currently working on the final options in the WarpsAndHomes - GUI_
+## License
+WarpsAndHomes is free software under the GNU General Public License, version 3 ([GPL-3.0-only](https://www.gnu.org/licenses/gpl-3.0.html)).
+The license can also be found in the files above under [LICENSE](https://github.com/AwayAllay/warps-and-homes/blob/main/LICENSE).
+
