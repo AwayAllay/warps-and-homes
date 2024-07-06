@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
+/**This is the class for one of the many warping-animations. It will automatically play the animation by
+ * creating an object with the constructor. After the animation finished, the player will be teleported to the given warp.
+ * @Parameters: player = the player for the animation, warp = the warp he will be teleported to.
+ * @Effect: Creates a sphere in which the player vanishes by teleporting.*/
 public class SphereAnimation {
 
     private final Player player;
@@ -107,7 +111,7 @@ public class SphereAnimation {
         }.runTaskTimer(WarpsAndHomes.getPlugin(), 0, 1);
     }
 
-    /**Don´t ask me how that works, but it spawns a sphere around the player*/
+    /**Spawns a sphere made of particles around the player.*/
     private void createSphere(Location location, double radius) {
         World world = location.getWorld();
         double step = Math.PI / 40; // Decrease steps for more particles

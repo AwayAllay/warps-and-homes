@@ -27,8 +27,8 @@ public final class WarpsAndHomes extends JavaPlugin {
         setup();
     }
 
+    /**The setup logic*/
     private void setup() {
-
 
         warpFile = new WarpFile();
 
@@ -58,28 +58,33 @@ public final class WarpsAndHomes extends JavaPlugin {
         sendHello();
     }
 
+    /**The message that will be sent when the server enables the plugin (if enabled in config.yml)*/
     private void sendHello() {
         if (getConfig().getBoolean("allow-goodbye-and-hello-message")) {
-            getServer().getLogger().info("[WarpsAndHomes] Hello!");
-            getServer().getLogger().info("[WarpsAndHomes] Plugin is now enabled!");
+            getServer().getLogger().info("*--------------------------------------------------*");
+            getServer().getLogger().info("|      Welcome to WarpsAndHomes - Have fun!!!      |");
+            getServer().getLogger().info("*--------------------------------------------------*");
         }
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-
         warpFile.saveFile();
         sendGoodbye();
     }
 
+    /**The message that will be sent when the server disables the plugin (if enabled in config.yml)*/
     private void sendGoodbye() {
         if (getConfig().getBoolean("allow-goodbye-and-hello-message")) {
-            getServer().getLogger().info("[WarpsAndHomes] Goodbye!");
-            getServer().getLogger().info("[WarpsAndHomes] Plugin is now disabled!");
+            getServer().getLogger().info("*--------------------------------------------------*");
+            getServer().getLogger().info("|            [WarpsAndHomes] Goodbye!!!            |");
+            getServer().getLogger().info("*--------------------------------------------------*");
         }
     }
 
+    /**The getter for the instance of the Main class.
+     * @Returns an instance of the Main class.*/
     public static WarpsAndHomes getPlugin() {
         return plugin;
     }
