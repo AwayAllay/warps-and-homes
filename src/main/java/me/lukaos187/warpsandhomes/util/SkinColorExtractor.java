@@ -63,6 +63,8 @@ public class SkinColorExtractor {
         return new ArrayList<>(colorSet);
     }
 
+    /**This will give you a list of the colors of the skin of the player which is given by creating an instance of this class.
+     * @Returns: A List<Color> with all the colors of the player´s skin. (Not the transparent ones) */
     public List<Color> getSkinColors() {
         if (uuid != null) {
 

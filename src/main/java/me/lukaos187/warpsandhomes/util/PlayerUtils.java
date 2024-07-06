@@ -18,6 +18,7 @@ public class PlayerUtils {
         return lastDamage;
     }
 
+    /**Returns a List of the given players skin-colors. */
     public static Map<UUID, List<Color>> getSkinColors() {
         return skinColors;
     }

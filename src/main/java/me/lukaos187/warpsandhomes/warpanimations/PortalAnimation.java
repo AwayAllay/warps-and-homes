@@ -11,7 +11,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-
+/**This is the class for one of the many warping-animations. It will automatically play the animation by
+ * creating an object with the constructor. After the animation finished, the player will be teleported to the given warp.
+ * @Parameters: player = the player for the animation, warp = the warp he will be teleported to.
+ * @Effect: Creates a ring in which the player is sucked and also a ring at the warps location where the player will be thrown out.*/
 public class PortalAnimation {
 
     private final Player player;

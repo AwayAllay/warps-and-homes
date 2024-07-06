@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public class HeadGetter {
 
+    /**Returns a playerHead as an Itemstack for the given base64 String.
+     * @Returns: An Itemstack for the given playerHead. */
     public static ItemStack getHead(String base64) {
 
         ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);

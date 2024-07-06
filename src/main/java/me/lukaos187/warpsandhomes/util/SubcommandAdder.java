@@ -17,6 +17,7 @@ public class SubcommandAdder {
         this.warpFile = warpFile;
     }
 
+    /**This will reload all the warp subcommands*/
     public void reloadSubs(final WarpFile warpFile) {
 
         if (!subcommands.isEmpty())
