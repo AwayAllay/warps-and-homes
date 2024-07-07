@@ -20,11 +20,24 @@ public class SetwarpMenu extends WarpMenu{
     private String name;
     private List<String> description;
     //TODO implement displayitem
-    private Material displayItem;
+    private ItemStack displayItem;
     private boolean isPrivate;
 
-    public SetwarpMenu(Player player, WarpFile warpFile) {
+    public SetwarpMenu(Player player, WarpFile warpFile, ItemStack displayItem, List<String> description, boolean isPrivate) {
         super(player, warpFile);
+
+        this.displayItem = displayItem;
+        this.description = description;
+        name = null;
+        this.isPrivate = isPrivate;
+
+        //allow-private-warps, allow-public-warps
+        if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps") && !isPrivate)
+            isPrivate = false;
+        else
+            isPrivate = WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warps");
+
+
     }
 
     @Override
@@ -45,10 +58,30 @@ public class SetwarpMenu extends WarpMenu{
         switch (e.getCurrentItem().getType()){
 
             case BARRIER -> new WarpChoice(player, warpFile).open();
-            case LIME_DYE -> new SetWarpNameGUI(player, description, displayItem, isPrivate, warpFile).open();
+            case LIME_DYE ->{
+                player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
 
+                if (description == null){
+                    description = new ArrayList<>(List.of(ChatColor.GRAY + "No description specified."));
+                }
 
-
+                new SetWarpNameGUI(player, description, displayItem, isPrivate, warpFile).open();
+            }
+            case OAK_SIGN -> {
+                player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
+                if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warps")){
+                    isPrivate = true;
+                    fill();
+                }
+            }
+            case ENDER_CHEST -> {
+                player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
+                if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps")){
+                    isPrivate = false;
+                    fill();
+                }
+            }
+            case WRITTEN_BOOK -> new SetWarpDescGUI(player, warpFile, displayItem, description, isPrivate).open();
         }
 
     }
@@ -67,10 +100,49 @@ public class SetwarpMenu extends WarpMenu{
             setItem(null, Material.GRAY_STAINED_GLASS_PANE, " ", new ArrayList<>(), i);
         }
 
-        setItem(null, Material.BARRIER, ChatColor.BOLD + "" + ChatColor.RED + "Cancel",
+        setItem(null, Material.BARRIER, ChatColor.RED + "" + ChatColor.BOLD + "Cancel",
                 new ArrayList<>(List.of("Click here to cancel the ", "warp-creation.")), 35);
-        setItem(null, Material.LIME_DYE, ChatColor.BOLD + "" + ChatColor.GREEN + "Set",
-                new ArrayList<>(List.of(ChatColor.GREEN + "Click here to set the warp.")), 31);
+
+        setItem(null, Material.LIME_DYE, ChatColor.GREEN + "" + ChatColor.BOLD + "Set",
+                new ArrayList<>(List.of(ChatColor.WHITE + "Click here to set the warp.")), 31);
+
+        if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps") && !isPrivate) {
+
+            List<String> lore = new ArrayList<>();
+
+
+            if (!WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warps")){
+                lore.add("This warp is public.");
+            }else {
+                lore.add("This warp is public. Make it private by ");
+                lore.add("clicking on this item.");
+            }
+
+            setItem(null, Material.OAK_SIGN, ChatColor.GREEN + "" + ChatColor.BOLD + "public",
+                    lore, 11);
+        }
+        else {
+
+            List<String> lore = new ArrayList<>();
+
+
+            if (!WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps")){
+                lore.add("This warp is private.");
+            }else {
+                lore.add("This warp is private. Make it public by ");
+                lore.add("clicking on this item.");
+            }
+
+            setItem(null, Material.ENDER_CHEST, ChatColor.RED + "" + ChatColor.BOLD + "private",
+                    lore, 11);
+        }
+
+        setItem(null, Material.GRASS_BLOCK, ChatColor.AQUA + "" + ChatColor.BOLD + "Display-Item",
+                new ArrayList<>(List.of("Click here to set a item for this ", "warp, which will be displayed ", "in your list of warps.")),
+                13);
+        setItem(null, Material.WRITTEN_BOOK, ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "Description",
+                new ArrayList<>(List.of("Click here to leave a description ", "for this warp.")), 15);
+
 
     }
 

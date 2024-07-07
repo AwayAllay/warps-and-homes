@@ -1,5 +1,6 @@
 package me.lukaos187.warpsandhomes.guis;
 
+import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import me.lukaos187.warpsandhomes.util.HeadGetter;
 import me.lukaos187.warpsandhomes.util.WarpFile;
 import org.bukkit.ChatColor;
@@ -44,7 +45,10 @@ public class WarpChoice extends WarpMenu{
         } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Back")) {
             new MainMenu(player, warpFile).open();
         } else if (ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()).equalsIgnoreCase("Set")) {
-            new SetwarpMenu(player, warpFile).open();
+            if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps")) {
+                new SetwarpMenu(player, warpFile, null, null, false).open();
+            }else
+                new SetwarpMenu(player, warpFile, null, null, true).open();
         }
 
     }
