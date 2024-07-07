@@ -25,7 +25,7 @@ public class SetWarpDescGUI {
     private final boolean isPrivate;
 
 
-    public SetWarpDescGUI(Player player, WarpFile warpFile, ItemStack displayItem, List<String> description, boolean isPrivate){
+    public SetWarpDescGUI(Player player, WarpFile warpFile, ItemStack displayItem, List<String> description, boolean isPrivate) {
 
         this.isPrivate = isPrivate;
         this.description = description;
@@ -34,11 +34,12 @@ public class SetWarpDescGUI {
         this.player = player;
         if (description != null) {
             desc = String.join(" ", description);
-        }else {
+        } else {
             desc = ChatColor.GRAY + "No description specified";
         }
     }
-    public void open(){
+
+    public void open() {
 
         ItemStack des = new ItemStack(Material.PAPER);
         ItemMeta meta = des.getItemMeta();
@@ -51,10 +52,9 @@ public class SetWarpDescGUI {
                 .itemLeft(des)
                 .onClick((slot, stateSnapshot) -> {
 
-                    if (slot != AnvilGUI.Slot.OUTPUT){
+                    if (slot != AnvilGUI.Slot.OUTPUT) {
                         return Collections.emptyList();
                     }
-
                     return Arrays.asList(
                             AnvilGUI.ResponseAction.close(),
                             AnvilGUI.ResponseAction.run(() -> descriptionChange(stateSnapshot.getText()))
@@ -68,10 +68,14 @@ public class SetWarpDescGUI {
 
     private void descriptionChange(final String newDescr) {
 
-        //FIXME Do not allow "" or "      "
+        List<String> wordsList;
 
-        String[] wordsArray = newDescr.split("\\s+");
-        List<String> wordsList = Arrays.asList(wordsArray);
+        if (!newDescr.equalsIgnoreCase("") && !newDescr.trim().isEmpty()) {
+            String[] wordsArray = newDescr.split("\\s+");
+            wordsList = Arrays.asList(wordsArray);
+        } else {
+            wordsList = List.of(ChatColor.GRAY + "No description specified.");
+        }
 
         new SetwarpMenu(player, warpFile, displayItem, wordsList, isPrivate).open();
     }

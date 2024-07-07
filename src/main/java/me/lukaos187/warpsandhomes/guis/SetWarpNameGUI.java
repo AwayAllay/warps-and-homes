@@ -50,10 +50,14 @@ public class SetWarpNameGUI {
                         return Collections.emptyList();
                     }
 
-                    return Arrays.asList(
-                            AnvilGUI.ResponseAction.close(),
-                            AnvilGUI.ResponseAction.run(() -> setName(stateSnapshot.getText()))
-                    );
+                    if (!ChatColor.stripColor(stateSnapshot.getText()).equalsIgnoreCase("") && !stateSnapshot.getText().trim().isEmpty()) {
+                        return Arrays.asList(
+                                AnvilGUI.ResponseAction.close(),
+                                AnvilGUI.ResponseAction.run(() -> setName(stateSnapshot.getText()))
+                        );
+                    } else {
+                        return Arrays.asList(AnvilGUI.ResponseAction.replaceInputText("Try again"));
+                    }
 
 
                 })
@@ -62,8 +66,6 @@ public class SetWarpNameGUI {
     }
 
     private void setName(final String text) {
-
-        //FIXME wenn man als namen gar nichts in die Zeile schreibt!
 
         String name = text.replaceAll(" ", "");
 
