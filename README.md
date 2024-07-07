@@ -9,6 +9,10 @@ _Description and features coming soon!_
 - [Installation](#installation)
 - [Usage](#usage)
   - [Commands](#commands)
+    - [Game-Commands](#game-commands)
+      - [Warp-Commands](#warp-commands)
+      - [Home-Commands](#home-commands)
+    - [Config-Commands](#config-commands)
   - [GUI](#gui)
   - [Config.yml](#configyml)
 - [Current](#current)
@@ -42,7 +46,24 @@ If you can't find a fitting version of this plugin for your server:
 ## Usage
 _Still in Development_
 ### Commands
-_Soon_
+_Coming Soon_
+Just act as if there was a detailed, helpful text on the topic here. The actual text is still to come.
+
+#### Game-Commands
+Here will be a list of all the commands for the players. It will look like this:
+
+`/command <cool-stuff>` - and a nice description.
+
+##### Warp-Commands
+There are commands for the Warping stuff.
+
+##### Home-Commands
+And commands for the homes stuff.
+
+#### Config-Commands
+
+And these commands only admins are allowed to use, because they directly affect the config.yml file.
+
 ### GUI
 _Soon_
 ### Config.yml
