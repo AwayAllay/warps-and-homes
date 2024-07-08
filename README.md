@@ -56,8 +56,16 @@ Here will be a list of all the commands for the players. It will look like this:
 
 ##### Warp-Commands
 _Every command that has to do with warping starts with `/warp`. 
-You can also get an overview of all possible subcommands if you enter `/warp` in the chat._
-[See demo.](https://github.com/AwayAllay/warps-and-homes/blob/main/src/main/resources/warpCommands.png)
+You can also get an [overview](https://github.com/AwayAllay/warps-and-homes/blob/main/src/main/resources/warpCommands.png)
+of all possible subcommands if you enter `/warp` in the chat._
+
+**Command:** `/warp set <name> <isPrivate?> <displayItem> <description>`  
+_Sets a warp at the players current location._  
+**Parameters:** 
+- `<name>`: the name of the new warp.
+- `<isPrivate?>`: if true this warp can only be seen by its owner. If false it is public and can be seen by anyone.
+- `<displayItem>`: The item that appears for the warp in the warp GUI.
+- `<description>`: Here you can write a short description about the warp,
 
 ##### Home-Commands
 And commands for the homes stuff.
