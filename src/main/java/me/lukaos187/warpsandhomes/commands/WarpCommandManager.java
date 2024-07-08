@@ -49,13 +49,8 @@ public class WarpCommandManager implements TabExecutor {
 
         } else {
             sendInfo(sender);
-            sendMissingArgsMessage(sender);
         }
 
-    }
-
-    private void sendMissingArgsMessage(final CommandSender sender) {
-        sender.sendMessage(ChatColor.RED + "Please provide more arguments to use that command!");
     }
 
     private void sendInfo(final CommandSender sender) {

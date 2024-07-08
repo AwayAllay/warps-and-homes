@@ -55,7 +55,9 @@ Here will be a list of all the commands for the players. It will look like this:
 `/command <cool-stuff>` - and a nice description.
 
 ##### Warp-Commands
-There are commands for the Warping stuff.
+_Every command that has to do with warping starts with `/warp`. 
+You can also get an overview of all possible subcommands if you enter `/warp` in the chat._
+[See demo.](https://github.com/AwayAllay/warps-and-homes/blob/main/src/main/resources/warpCommands.png)
 
 ##### Home-Commands
 And commands for the homes stuff.
