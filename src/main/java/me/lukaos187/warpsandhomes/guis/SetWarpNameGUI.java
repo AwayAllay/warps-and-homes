@@ -87,7 +87,7 @@ public class SetWarpNameGUI {
             return;
         }
 
-        String[] args = {"set", name, String.valueOf(isPrivate), desc};
+        String[] args = {"set", name, String.valueOf(isPrivate), String.valueOf(displayItem.getType()), desc};
 
         new SetWarp(warpFile).perform(player, args);
 

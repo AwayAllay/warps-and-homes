@@ -33,9 +33,9 @@ public class SetwarpMenu extends WarpMenu{
 
         //allow-private-warps, allow-public-warps
         if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps") && !isPrivate)
-            isPrivate = false;
+            this.isPrivate = false;
         else
-            isPrivate = WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warps");
+            this.isPrivate = WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warps");
 
 
     }
@@ -82,6 +82,7 @@ public class SetwarpMenu extends WarpMenu{
                 }
             }
             case WRITTEN_BOOK -> new SetWarpDescGUI(player, warpFile, displayItem, description, isPrivate).open();
+            case GRASS_BLOCK -> new DisplayItemGUI(player, warpFile, displayItem, description, isPrivate).open();
         }
 
     }

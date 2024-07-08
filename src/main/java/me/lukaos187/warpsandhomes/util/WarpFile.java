@@ -3,6 +3,7 @@ package me.lukaos187.warpsandhomes.util;
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -114,6 +115,7 @@ public class WarpFile {
         conf.set(warp.getName() + ".yaw", String.valueOf(warp.getLocation().getYaw()));
         conf.set(warp.getName() + ".pitch", String.valueOf(warp.getLocation().getPitch()));
         conf.set(warp.getName() + ".isPrivate", String.valueOf(warp.isPrivate()));
+        conf.set(warp.getName() + ".material", String.valueOf(warp.getDisplayItem()));
 
         saveFile();
 
@@ -137,13 +139,20 @@ public class WarpFile {
 
             Player owner = Bukkit.getPlayer(Objects.requireNonNull(conf.getString(name + ".owner")));
 
+            Material material;
+            try {
+                material = Material.valueOf(conf.getString(name + ".material"));
+            }catch (IllegalArgumentException e) {
+                material = null;
+            }
+
             return new Warp(
                     name,
                     conf.getString(name + ".description"),
                     owner,
                     Boolean.parseBoolean(conf.getString(name + ".isPrivate")),
-                    loc
-            );
+                    loc,
+                    material);
 
         }
         return null;

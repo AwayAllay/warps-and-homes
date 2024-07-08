@@ -1,9 +1,12 @@
 package me.lukaos187.warpsandhomes.util;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 
 public class Warp {
@@ -13,14 +16,15 @@ public class Warp {
     private Player owner;
     private boolean isPrivate;
     private Location location;
+    private Material displayItem;
 
-    public Warp(@Nonnull String name, String description, Player owner, boolean isPrivate, Location location) {
+    public Warp(@Nonnull String name, String description, Player owner, boolean isPrivate, Location location, Material displayItem) {
         this.name = Objects.requireNonNull(name);
         this.description = description;
         this.owner = owner;
         this.isPrivate = isPrivate;
         this.location = location;
-
+        this.displayItem = displayItem;
     }
 
     /**Gets the name of the warp.*/
@@ -71,6 +75,17 @@ public class Warp {
     /**Sets the location of the warp*/
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    /**Returns the saved material for the warp.*/
+    @Nullable
+    public Material getDisplayItem(){
+        return displayItem;
+    }
+
+    /**Sets the displayItem-Material for this warp.*/
+    public void setDisplayItem(Material newItem){
+        this.displayItem = newItem;
     }
 
     @Override

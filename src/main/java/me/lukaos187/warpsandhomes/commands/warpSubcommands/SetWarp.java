@@ -2,9 +2,12 @@ package me.lukaos187.warpsandhomes.commands.warpSubcommands;
 
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import me.lukaos187.warpsandhomes.util.Warp;
+import me.lukaos187.warpsandhomes.util.WarpDisplayItems;
 import me.lukaos187.warpsandhomes.util.WarpFile;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,7 @@ public class SetWarp implements Subcommand {
 
     @Override
     public String getUsage() {
-        return "/warp set <name> <isPrivate?> <description>";
+        return "/warp set <name> <isPrivate?> <displayItem> <description>";
     }
 
     @Override
@@ -63,6 +66,12 @@ public class SetWarp implements Subcommand {
             if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps"))//Only public warps if enabled in config
                 tab.add("false");
             return tab;
+        } else if (argsLength == 4) {
+            List<String> toReturn = new ArrayList<>();
+
+            WarpDisplayItems.getItems().forEach(itemStack -> toReturn.add(String.valueOf(itemStack.getType())));
+            toReturn.add("null");
+            return toReturn;
         }
 
         return null;
@@ -96,7 +105,7 @@ public class SetWarp implements Subcommand {
             }
         } else {
             player.sendMessage(ChatColor.RED + "Please provide more arguments!");
-            player.sendMessage("Example: " + ChatColor.AQUA + "/warp set <name> <isPrivate?> <description>");
+            player.sendMessage("Example: " + ChatColor.AQUA + "/warp set <name> <isPrivate?> <displayItem> <description>");
         }
     }
 
@@ -109,6 +118,20 @@ public class SetWarp implements Subcommand {
         boolean isPrivate = Boolean.parseBoolean(getIsPrivate(args, owner));
         String desc = ChatColor.GRAY + "No description specified";
 
+        Material material;//Set the warp display-Item Material
+        if (args.length >= 5){
+            try {
+                material = Material.valueOf(args[3]);
+
+                if (!WarpDisplayItems.getItems().contains(new ItemStack(material)))
+                    throw new IllegalArgumentException();
+
+            }catch (IllegalArgumentException e){
+                material = null;
+            }
+        }else
+            material = null;
+
         if (args.length > 2) {
 
             if (getIsPrivate(args, owner) == null)
@@ -116,17 +139,17 @@ public class SetWarp implements Subcommand {
 
             isPrivate = Boolean.parseBoolean(getIsPrivate(args, owner));
 
-            if (args.length > 3) {
+            if (args.length > 4) {
 
                 StringBuilder sb = new StringBuilder();
-                for (int i = 3; i < args.length; i++) {
+                for (int i = 4; i < args.length; i++) {
                     sb.append(args[i]).append(" ");
                 }
                 desc = sb.toString().trim();
             }
         }
 
-        Warp warp = new Warp(warpName, desc, owner, isPrivate, owner.getLocation());
+        Warp warp = new Warp(warpName, desc, owner, isPrivate, owner.getLocation(), material);
         return warp;
     }
 

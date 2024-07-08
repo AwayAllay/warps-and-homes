@@ -126,8 +126,12 @@ public class PaginatedWarpsGUI extends WarpMenu{
                 break;
 
             Warp warp = warps.get(index);
+            ItemStack warpItem;
 
-            ItemStack warpItem = getWarpItem(warp);
+            if (warp.getDisplayItem() == null)
+                warpItem = getWarpItem(warp);
+            else
+                warpItem = addMeta(new ItemStack(warp.getDisplayItem()), warp);
 
             inventory.setItem(i, warpItem);
         }
