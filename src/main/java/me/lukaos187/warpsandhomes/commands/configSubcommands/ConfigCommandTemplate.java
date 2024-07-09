@@ -64,6 +64,16 @@ public abstract class ConfigCommandTemplate implements ConfigSubcommand {
 
     private boolean test(boolean b, CommandSender sender) {
 
+        if (configKey.equalsIgnoreCase("allow-private-warps") && !b &&
+                !WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps")){
+            sender.sendMessage(ChatColor.RED + "You can not disable both private and public warps.");
+            return true;
+        }
+        if (configKey.equalsIgnoreCase("allow-public-warps") && !b &&
+                !WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warps")){
+            sender.sendMessage(ChatColor.RED + "You can not disable both private and public warps.");
+            return true;
+        }
         if (WarpsAndHomes.getPlugin().getConfig().getBoolean(configKey) == b) {
             sender.sendMessage(ChatColor.RED + configKey + " is already set to " + b + "!");
             return true;

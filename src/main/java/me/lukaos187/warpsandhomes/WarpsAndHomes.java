@@ -55,9 +55,10 @@ public final class WarpsAndHomes extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnDamage(), this);
         getServer().getPluginManager().registerEvents(new OnInventoryClick(), this);
 
-        if (getConfig().getBoolean("allow-private-warps") && getConfig().getBoolean("allow-public-warps")){
-            getConfig().set("allow-private-warps", true);
+        if (!getConfig().getBoolean("allow-private-warps") && !getConfig().getBoolean("allow-public-warps")){
             getLogger().info("[WarpsAndHomes] public and private warps are disabled! Enabling private warps!");
+            getConfig().set("allow-private-warps", true);
+            saveConfig();
         }
 
         sendHello();

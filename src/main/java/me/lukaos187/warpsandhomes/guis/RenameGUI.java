@@ -53,7 +53,7 @@ public class RenameGUI {
         String[] args = {"rename", warp.getName(), newName};
         new WarpRename(warpFile).perform(player, args);
 
-        new WarpOpt(player, warpFile, newName, warpItem).open();
+        new WarpOpt(player, warpFile, warpFile.getWarp(newName), warpItem).open();
     }
 
 

@@ -18,12 +18,12 @@ import java.util.Objects;
 
 public class WarpOpt extends WarpMenu{
 
-    private final String warpName;
+    private final Warp warp;
     private final ItemStack warpItem;
 
-    public WarpOpt(Player player, WarpFile warpFile, String warpName, ItemStack warpItem) {
+    public WarpOpt(Player player, WarpFile warpFile, Warp warp, ItemStack warpItem) {
         super(player, warpFile);
-        this.warpName = warpName;
+        this.warp = warp;
         this.warpItem = warpItem;
     }
 
@@ -34,7 +34,7 @@ public class WarpOpt extends WarpMenu{
 
     @Override
     public String name() {
-        return ChatColor.GOLD + warpName;
+        return ChatColor.GOLD + warp.getName();
     }
 
     @Override
@@ -46,16 +46,16 @@ public class WarpOpt extends WarpMenu{
 
             case END_PORTAL_FRAME -> {
                 player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
-                String[]args = {"warp", warpName};
+                String[]args = {"warp", warp.getName()};
                 new WarpToWarp(warpFile).perform(player, args);
             }
-            case TNT -> new ConfirmGUI(player, warpFile, ChatColor.RED + "Delete-Warp", warpName).open();
-            case COMPASS -> new ConfirmGUI(player, warpFile, ChatColor.GRAY + "Update-Warp", warpName).open();
+            case TNT -> new ConfirmGUI(player, warpFile, ChatColor.RED + "Delete-Warp", warp.getName()).open();
+            case COMPASS -> new ConfirmGUI(player, warpFile, ChatColor.GRAY + "Update-Warp", warp.getName()).open();
             case ENDER_CHEST -> {
                 player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
 
                 if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps")) {
-                    String[] args = {"unlock", warpName};
+                    String[] args = {"unlock", warp.getName()};
                     new WarpUnlock(warpFile).perform(player, args);
                     fill();
                 }
@@ -64,15 +64,19 @@ public class WarpOpt extends WarpMenu{
                 player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
 
                 if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warps")) {
-                    String[] args = {"lock", warpName};
+                    String[] args = {"lock", warp.getName()};
                     new WarpLock(warpFile).perform(player, args);
                     fill();
                 }
             }
 
-            case PLAYER_HEAD -> new HandoverGUI(player, warpFile, warpFile.getWarp(warpName)).open();
-            case WRITTEN_BOOK -> new DescribeGUI(player, warpItem, warpFile.getWarp(warpName), warpFile).open();
-            case ANVIL -> new RenameGUI(player, warpItem, warpFile.getWarp(warpName), warpFile).open();
+            case PLAYER_HEAD -> new HandoverGUI(player, warpFile, warpFile.getWarp(warp.getName())).open();
+            case WRITTEN_BOOK -> new DescribeGUI(player, warpItem, warpFile.getWarp(warp.getName()), warpFile).open();
+            case ANVIL -> new RenameGUI(player, warpItem, warpFile.getWarp(warp.getName()), warpFile).open();
+            case GRASS_BLOCK -> {
+                player.playSound(player,Sound.UI_BUTTON_CLICK, 5F, 5F);
+                new DisplayItemGUI(player, warpFile, warpFile.getWarp(warp.getName()), warpItem).open();
+            }
         }
     }
 
@@ -98,10 +102,7 @@ public class WarpOpt extends WarpMenu{
         setItem("allow-warp-updating", Material.COMPASS, ChatColor.GREEN + "Update",
                 new ArrayList<>(List.of("Click here to ", "update this warp.")), 23);
 
-
-        //TODO BOTH
-        Warp warp = warpFile.getWarp(warpName);
-        setPrivacyItems(warp);
+        setPrivacyItems();
 
         setItem(null, Material.GRASS_BLOCK, ChatColor.AQUA + "" + ChatColor.BOLD + "Display-Item",
                 new ArrayList<>(List.of("Click here to set a item for this ", "warp, which will be displayed ", "in your list of warps.")),
@@ -123,7 +124,7 @@ public class WarpOpt extends WarpMenu{
                 new ArrayList<>(List.of("Click here to go to ", "the previous menu.")), 31);
     }
 
-    private void setPrivacyItems(final Warp warp) {
+    private void setPrivacyItems() {
 
         List<String> lore = new ArrayList<>();
         if (!warp.isPrivate()) {
@@ -136,7 +137,7 @@ public class WarpOpt extends WarpMenu{
             }
 
             setItem(null, Material.OAK_SIGN, ChatColor.GREEN + "" + ChatColor.BOLD + "public",
-                    lore, 11);
+                    lore, 19);
         }
         else {
 
@@ -148,7 +149,7 @@ public class WarpOpt extends WarpMenu{
             }
 
             setItem(null, Material.ENDER_CHEST, ChatColor.RED + "" + ChatColor.BOLD + "private",
-                    lore, 11);
+                    lore, 19);
         }
 
     }

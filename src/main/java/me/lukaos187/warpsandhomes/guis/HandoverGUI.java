@@ -25,7 +25,7 @@ public class HandoverGUI extends PaginatedPlayerListGUI {
 
     @Override
     protected void handleBackClick() {
-        new WarpOpt(player, warpFile, warp.getName(), new ItemStack(Material.IRON_BARS)).open();
+        new WarpOpt(player, warpFile, warp, new ItemStack(Material.IRON_BARS)).open();
     }
 
     @Override

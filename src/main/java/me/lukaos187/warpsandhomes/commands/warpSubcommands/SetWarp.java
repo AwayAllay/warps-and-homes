@@ -159,8 +159,8 @@ public class SetWarp implements Subcommand {
 
         if (!allowPrivateWarps && !allowPublicWarps) {
             WarpsAndHomes.getPlugin().getServer().getLogger().info(ChatColor.RED + "[WarpsAndHomes] ONLY ONE PUBLIC MODIFIER IS ALLOWED TO BE FALSE!");
-            WarpsAndHomes.getPlugin().getServer().getLogger().info(ChatColor.RED + "[WarpsAndHomes] PLEASE CHECK THE CONFIG.YML!");
-            WarpsAndHomes.getPlugin().getServer().getLogger().info(ChatColor.RED + "[WarpsAndHomes] SETTING WARPS IS NOW DISABLED!");
+            WarpsAndHomes.getPlugin().getConfig().set("allow-private-warps", true);
+            WarpsAndHomes.getPlugin().saveConfig();
             return null;
         }
 

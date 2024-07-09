@@ -61,7 +61,7 @@ public class DescribeGUI {
         String[] args = {"describe", warp.getName(), newDescr};
         new WarpDescribe(warpFile).perform(player, args);
 
-        new WarpOpt(player, warpFile, warp.getName(), warpItem).open();
+        new WarpOpt(player, warpFile, warp, warpItem).open();
     }
 
 }

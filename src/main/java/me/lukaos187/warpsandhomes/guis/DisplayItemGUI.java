@@ -1,6 +1,7 @@
 package me.lukaos187.warpsandhomes.guis;
 
 import me.lukaos187.warpsandhomes.util.HeadGetter;
+import me.lukaos187.warpsandhomes.util.Warp;
 import me.lukaos187.warpsandhomes.util.WarpDisplayItems;
 import me.lukaos187.warpsandhomes.util.WarpFile;
 import org.bukkit.ChatColor;
@@ -22,12 +23,22 @@ public class DisplayItemGUI extends WarpMenu{
     private ItemStack displayItem;
     private final List<String> description;
     private final boolean isPrivate;
+    private final Warp warp;
 
     public DisplayItemGUI(Player player, WarpFile warpFile,
                           ItemStack displayItem, List<String> description, boolean isPrivate) {
         super(player, warpFile);
         this.isPrivate = isPrivate;
         this.description = description;
+        this.displayItem = displayItem;
+        this.warp = null;
+    }
+
+    public DisplayItemGUI(Player player, WarpFile warpFile, Warp warp, ItemStack displayItem){
+        super(player, warpFile);
+        this.description = null;
+        this.isPrivate = warp.isPrivate();
+        this.warp = warp;
         this.displayItem = displayItem;
     }
 
@@ -65,7 +76,25 @@ public class DisplayItemGUI extends WarpMenu{
                     fill();
                 }
             }
-            case "Back" -> new SetwarpMenu(player, warpFile, displayItem, description, isPrivate).open();
+            case "Back" -> {
+
+                if (warp == null)
+                    new SetwarpMenu(player, warpFile, displayItem, description, isPrivate).open();
+                else {
+                    try {
+                        warp.setDisplayItem(displayItem.getType());
+                    }catch (NullPointerException ex){
+                        warp.setDisplayItem(null);
+                    }
+                    warpFile.saveWarp(warp);
+                    new WarpOpt(player, warpFile, warp, displayItem).open();
+                }
+            }
+            case "Reset item" -> {
+                player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
+                player.sendMessage("Item is " + ChatColor.AQUA + "reset" + ChatColor.RESET + ".");
+                displayItem = null;
+            }
             default -> {
                 player.playSound(player, Sound.UI_BUTTON_CLICK, 5F, 5F);
                 displayItem = currentItem;
@@ -84,6 +113,14 @@ public class DisplayItemGUI extends WarpMenu{
     public void fill() {
         inventory.clear();
         optionBar();
+
+        ItemStack reset = new ItemStack(Material.RED_BANNER);
+        ItemMeta meta = reset.getItemMeta();
+        Objects.requireNonNull(meta).setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Reset item");
+        meta.setLore(new ArrayList<>(List.of("Click here to reset your display-item to ", "the default.")));
+        reset.setItemMeta(meta);
+        items.add(0, reset);
+
 
         for (int i = 0; i < 45; i++) {
             int index = currentPage * 45 + i;

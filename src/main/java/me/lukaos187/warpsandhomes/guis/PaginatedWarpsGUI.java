@@ -99,7 +99,7 @@ public class PaginatedWarpsGUI extends WarpMenu{
             }
             default -> {
                 if (target == null){
-                    new WarpOpt(player, warpFile, displayName, currentItem).open();
+                    new WarpOpt(player, warpFile, warpFile.getWarp(displayName), currentItem).open();
                 }else {
                     Warp warp = warpFile.getWarp(displayName);
                     if (warp == null)

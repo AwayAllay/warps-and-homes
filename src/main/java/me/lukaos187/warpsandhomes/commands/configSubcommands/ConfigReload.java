@@ -33,9 +33,10 @@ public class ConfigReload extends ConfigCommandTemplate{
         WarpsAndHomes.getPlugin().reloadConfig();
         sender.sendMessage("Config.yml " + ChatColor.GREEN + "reloaded");
 
-        if (WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warps") && WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps")){
+        if (!WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warps") && !WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps")){
             WarpsAndHomes.getPlugin().getConfig().set("allow-private-warps", true);
             WarpsAndHomes.getPlugin().getLogger().info("[WarpsAndHomes] public and private warps are disabled! Enabling private warps!");
+            WarpsAndHomes.getPlugin().saveConfig();
         }
     }
 
