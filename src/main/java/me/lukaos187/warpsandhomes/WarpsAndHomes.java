@@ -4,10 +4,7 @@ import me.lukaos187.warpsandhomes.commands.ConfigCommandManager;
 import me.lukaos187.warpsandhomes.commands.OpenMenu;
 import me.lukaos187.warpsandhomes.commands.WarpCommandManager;
 import me.lukaos187.warpsandhomes.listener.*;
-import me.lukaos187.warpsandhomes.util.PlayerUtils;
-import me.lukaos187.warpsandhomes.util.SkinColorExtractor;
-import me.lukaos187.warpsandhomes.util.SubcommandAdder;
-import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -56,6 +53,7 @@ public final class WarpsAndHomes extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OnInventoryClick(), this);
 
         if (!getConfig().getBoolean("allow-private-warps") && !getConfig().getBoolean("allow-public-warps")){
+            new Messages(this).checkConfigErrorNuke();
             getLogger().info("[WarpsAndHomes] public and private warps are disabled! Enabling private warps!");
             getConfig().set("allow-private-warps", true);
             saveConfig();
@@ -67,9 +65,7 @@ public final class WarpsAndHomes extends JavaPlugin {
     /**The message that will be sent when the server enables the plugin (if enabled in config.yml)*/
     private void sendHello() {
         if (getConfig().getBoolean("allow-goodbye-and-hello-message")) {
-            getServer().getLogger().info("*--------------------------------------------------*");
-            getServer().getLogger().info("|      Welcome to WarpsAndHomes - Have fun!!!      |");
-            getServer().getLogger().info("*--------------------------------------------------*");
+            new Messages(this).randomHelloMessage();
         }
     }
 
@@ -83,9 +79,7 @@ public final class WarpsAndHomes extends JavaPlugin {
     /**The message that will be sent when the server disables the plugin (if enabled in config.yml)*/
     private void sendGoodbye() {
         if (getConfig().getBoolean("allow-goodbye-and-hello-message")) {
-            getServer().getLogger().info("*--------------------------------------------------*");
-            getServer().getLogger().info("|            [WarpsAndHomes] Goodbye!!!            |");
-            getServer().getLogger().info("*--------------------------------------------------*");
+            new Messages(this).randomGoodbyeMessage();
         }
     }
 

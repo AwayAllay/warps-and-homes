@@ -1,6 +1,7 @@
 package me.lukaos187.warpsandhomes.commands.warpSubcommands;
 
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
+import me.lukaos187.warpsandhomes.util.Messages;
 import me.lukaos187.warpsandhomes.util.Warp;
 import me.lukaos187.warpsandhomes.util.WarpDisplayItems;
 import me.lukaos187.warpsandhomes.util.WarpFile;
@@ -158,6 +159,7 @@ public class SetWarp implements Subcommand {
         boolean allowPublicWarps = WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps");
 
         if (!allowPrivateWarps && !allowPublicWarps) {
+            new Messages(WarpsAndHomes.getPlugin()).checkConfigErrorNuke();
             WarpsAndHomes.getPlugin().getServer().getLogger().info(ChatColor.RED + "[WarpsAndHomes] ONLY ONE PUBLIC MODIFIER IS ALLOWED TO BE FALSE!");
             WarpsAndHomes.getPlugin().getConfig().set("allow-private-warps", true);
             WarpsAndHomes.getPlugin().saveConfig();

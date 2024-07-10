@@ -1,7 +1,8 @@
 #Cool Plugin Config.yml
 
 #---------------------------PLUGIN-SETTINGS---------------------------
-allow-goodbye-and-hello-message: true #Enable this if you want confirmation for the en/disabling of the plugin in the console
+#Enable this if you want confirmation for the en/disabling of the plugin in the console
+allow-goodbye-and-hello-message: true #Find more images here: https://boxes.thomasjensen.com/box-designs.html
 
 allow-warp-animations: true #Enables animations during warp
 #allow-chat-warps: true #Enable if you want your players to warp per chat!!!!!!!!!!!!!!!!

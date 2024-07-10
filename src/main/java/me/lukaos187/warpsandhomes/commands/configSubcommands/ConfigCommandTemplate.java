@@ -1,6 +1,7 @@
 package me.lukaos187.warpsandhomes.commands.configSubcommands;
 
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
+import me.lukaos187.warpsandhomes.util.Messages;
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
 import org.bukkit.ChatColor;
@@ -66,11 +67,13 @@ public abstract class ConfigCommandTemplate implements ConfigSubcommand {
 
         if (configKey.equalsIgnoreCase("allow-private-warps") && !b &&
                 !WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-public-warps")){
+            new Messages(WarpsAndHomes.getPlugin()).checkConfigErrorNuke();
             sender.sendMessage(ChatColor.RED + "You can not disable both private and public warps.");
             return true;
         }
         if (configKey.equalsIgnoreCase("allow-public-warps") && !b &&
                 !WarpsAndHomes.getPlugin().getConfig().getBoolean("allow-private-warps")){
+            new Messages(WarpsAndHomes.getPlugin()).checkConfigErrorNuke();
             sender.sendMessage(ChatColor.RED + "You can not disable both private and public warps.");
             return true;
         }
