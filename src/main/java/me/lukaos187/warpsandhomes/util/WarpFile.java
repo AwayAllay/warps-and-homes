@@ -16,6 +16,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/**This is the main saving file of the plugin. The warp file manages all things that have to do with the warps.
+ * To use this file you first have to call setUp().
+ * @Usage: To use this file call setUp() before using
+ * @Important: If you changed anything about a warp. Call saveWarp().*/
 public class WarpFile {
 
     private File file;

@@ -3,6 +3,7 @@ package me.lukaos187.warpsandhomes.util;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +23,7 @@ public class WarpDisplayItems {
         return toReturn;
     }
 
+    @Nonnull
     private static List<Material> getMaterials() {
 
         List<Material> materials = Arrays.asList(

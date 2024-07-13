@@ -3,12 +3,12 @@ package me.lukaos187.warpsandhomes.util;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
+/**This is the warp class. One object represents a warp that includes all the needed information, such as the owner, the location, the name, the description...*/
 public class Warp {
 
     private String name;
@@ -28,6 +28,7 @@ public class Warp {
     }
 
     /**Gets the name of the warp.*/
+    @Nonnull
     public String getName() {
         return name;
     }
