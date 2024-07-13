@@ -82,7 +82,7 @@ Detailed information about the individual settings can be found as comments in t
 still have any questions or issues, please create a issue in the [issues tab](https://github.com/AwayAllay/warps-and-homes/issues).
 
 ## Current
-_Currently working on the final options in the WarpsAndHomes - GUI_
+_Currently working on making the code more understandable and shorter_
 ## License
 WarpsAndHomes is free software under the GNU General Public License, version 3 ([GPL-3.0-only](https://www.gnu.org/licenses/gpl-3.0.html)).
 The license can also be found in the files above under [LICENSE](https://github.com/AwayAllay/warps-and-homes/blob/main/LICENSE).
