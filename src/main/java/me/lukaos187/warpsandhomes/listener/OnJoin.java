@@ -17,11 +17,14 @@ public class OnJoin implements Listener {
     }
 
     @EventHandler
+    @SuppressWarnings("ConstantValue")
     public void onJoin(PlayerJoinEvent e){
 
         Player player = e.getPlayer();
 
-        warpFile.removeSuperfluousWarps(e.getPlayer());
-        PlayerUtils.getSkinColors().put(e.getPlayer().getUniqueId(), new SkinColorExtractor(player).getSkinColors());
+        if (player != null) {
+            warpFile.removeSuperfluousWarps(e.getPlayer());
+            PlayerUtils.getSkinColors().put(e.getPlayer().getUniqueId(), new SkinColorExtractor(player).getSkinColors());
+        }
     }
 }

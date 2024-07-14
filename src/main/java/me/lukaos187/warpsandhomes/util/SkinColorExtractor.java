@@ -38,7 +38,11 @@ public class SkinColorExtractor {
             conn.disconnect();
             return image;
         } catch (Exception e) {
-            Bukkit.getPlayer(uuid).sendMessage(ChatColor.RED + "Something went wrong. Please rejoin in a few seconds.");
+
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                player.sendMessage(ChatColor.RED + "Something went wrong. Please rejoin in a few seconds.");
+            }
         }
         return null;
     }
@@ -63,8 +67,11 @@ public class SkinColorExtractor {
         return new ArrayList<>(colorSet);
     }
 
-    /**This will give you a list of the colors of the skin of the player which is given by creating an instance of this class.
-     * @Returns: A List<Color> with all the colors of the player´s skin. (Not the transparent ones) */
+    /**
+     * This will give you a list of the colors of the skin of the player which is given by creating an instance of this class.
+     *
+     * @Returns: A List<Color> with all the colors of the player´s skin. (Not the transparent ones)
+     */
     public List<Color> getSkinColors() {
         if (uuid != null) {
 

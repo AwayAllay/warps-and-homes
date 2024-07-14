@@ -8,20 +8,23 @@ version = '1.19-1.0.0'
 
 repositories {
     mavenCentral()
-    maven {
+    maven {///spigot
         name = "spigotmc-repo"
         url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
     }
-    maven {
+    /*maven {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
     maven {
         url 'https://jitpack.io'
-    }
-    maven {
+    }*/
+    maven {//Anvil GUI
         name = "codemc-snapshots"
         url = "https://repo.codemc.io/repository/maven-snapshots/"
+    }
+    maven {
+        url 'https://repo.papermc.io/repository/maven-public/'
     }
 
 }
@@ -46,6 +49,19 @@ java {
 tasks.withType(JavaCompile).configureEach {
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
+    }
+}
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter('5.10.3')
+            dependencies {
+                compileOnly "org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT"
+                implementation 'com.github.seeseemelk:MockBukkit-v1.20:3.88.1'
+                runtimeOnly 'org.slf4j:slf4j-nop:1.8.0-beta4'
+            }
+        }
     }
 }
 

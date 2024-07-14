@@ -6,11 +6,12 @@ import me.lukaos187.warpsandhomes.commands.WarpCommandManager;
 import me.lukaos187.warpsandhomes.listener.*;
 import me.lukaos187.warpsandhomes.util.*;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
-public final class WarpsAndHomes extends JavaPlugin {
+public class WarpsAndHomes extends JavaPlugin {
 
     private static WarpsAndHomes plugin;
     private WarpFile warpFile;
@@ -18,8 +19,6 @@ public final class WarpsAndHomes extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        saveDefaultConfig();
-
         plugin = this;
         setup();
     }
@@ -58,8 +57,10 @@ public final class WarpsAndHomes extends JavaPlugin {
         PlayerUtils.getSkinColors().clear();
 
         Bukkit.getOnlinePlayers().forEach(player -> {
-            warpFile.removeSuperfluousWarps(player);
-            PlayerUtils.getSkinColors().put(player.getUniqueId(), new SkinColorExtractor(player).getSkinColors());
+            if (player != null) {
+                warpFile.removeSuperfluousWarps(player);
+                PlayerUtils.getSkinColors().put(player.getUniqueId(), new SkinColorExtractor(player).getSkinColors());
+            }
         });
 
     }

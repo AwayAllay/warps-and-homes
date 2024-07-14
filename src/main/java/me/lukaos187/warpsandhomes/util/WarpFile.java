@@ -190,10 +190,8 @@ public class WarpFile {
 
         List<String> warps = getWarps(player);
 
-        if(warps == null){
-            System.out.println("Player has no warps.");
+        if(warps == null)
             return;
-        }
 
         PersistentDataContainer data = player.getPersistentDataContainer();
 
