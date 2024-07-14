@@ -1,0 +1,7 @@
+//TODO add the language files with the keys in different languages and register them in the TranslationManager and the WarpsAndHomes languageSetUp method.
+//TODO use the Translator object (non static) to translate all the messages.
+//TODO make the PlayerUtils class non static
+//TODO fix the problem with the allow/not allow GUI option
+//TODO write tests for everything
+//TODO add homes part
+//TODO write README.md

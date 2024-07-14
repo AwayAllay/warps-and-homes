@@ -18,16 +18,24 @@ import me.lukaos187.warpsandhomes.commands.OpenMenu;
 import me.lukaos187.warpsandhomes.commands.WarpCommandManager;
 import me.lukaos187.warpsandhomes.listener.*;
 import me.lukaos187.warpsandhomes.util.*;
+import me.lukaos187.warpsandhomes.util.translationUtils.PlayerLanguageManager;
+import me.lukaos187.warpsandhomes.util.translationUtils.TranslationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Objects;
 
 public class WarpsAndHomes extends JavaPlugin {
 
     private static WarpsAndHomes plugin;
     private WarpFile warpFile;
+    private PlayerLanguageManager playerLanguageManager;
+    private TranslationManager translationManager;
 
     @Override
     public void onEnable() {
@@ -38,6 +46,8 @@ public class WarpsAndHomes extends JavaPlugin {
 
     /**The setup logic*/
     private void setup() {
+        //Set up language stuff
+        languageSetUp();
         //Set up the File for the warp
         warpFile = new WarpFile();
         warpFile.setUp();
@@ -63,6 +73,36 @@ public class WarpsAndHomes extends JavaPlugin {
         }
         //Send the hello message
         sendHello();
+    }
+
+    private void languageSetUp() {
+
+        playerLanguageManager = new PlayerLanguageManager(getDataFolder());
+        translationManager = new TranslationManager(getDataFolder());
+
+        saveResourceIfNotExists("languages/english.yml", 2);
+        saveResourceIfNotExists("languages/german.yml", 2);
+    }
+
+    private void saveResourceIfNotExists(final String languageResourcePath, int savingTries) {
+
+        File file = new File(getDataFolder(), languageResourcePath);
+        if (!file.exists()){
+
+            file.getParentFile().mkdirs();
+            try (InputStream in = getResource(languageResourcePath)){
+                if (in != null)
+                    Files.copy(in, file.toPath());
+            }catch (IOException e){
+                if (savingTries > 0){
+                    saveResourceIfNotExists(languageResourcePath, savingTries--);
+                }else {
+                    getLogger().info("[WarpsAndHomes] Language option failed. Try restarting the server " +
+                            "to gain access to it.");
+                }
+            }
+        }
+
     }
 
     private void classesSetup(final WarpFile warpFile) {
