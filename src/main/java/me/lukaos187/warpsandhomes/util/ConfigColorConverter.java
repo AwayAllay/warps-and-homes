@@ -18,7 +18,7 @@ import org.bukkit.Color;
 
 import java.util.List;
 import java.util.Random;
-
+//FIXME TRANSLATIONS NEEDED
 public class ConfigColorConverter {
 
     private Color pColor;

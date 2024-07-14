@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class WarpChoice extends WarpMenu{
-
+    //FIXME TRANSLATIONS NEEDED
     public WarpChoice(Player player, WarpFile warpFile) {
         super(player, warpFile);
     }

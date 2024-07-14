@@ -75,7 +75,6 @@ public class WarpFile {
             String warps = data.get(new NamespacedKey(WarpsAndHomes.getPlugin(), "warps"), PersistentDataType.STRING);
 
             if (warp == null){
-                System.out.println("No warps found.");
                 return;
             }
 
@@ -187,7 +186,6 @@ public class WarpFile {
             String warps = data.get(new NamespacedKey(WarpsAndHomes.getPlugin(), "warps"), PersistentDataType.STRING);
 
             if (warps == null){
-                System.out.println("No warps found.");
                 return null;
             }
 
@@ -215,7 +213,6 @@ public class WarpFile {
             String warpName = iterator.next();
 
             if (getWarp(warpName) == null) {
-                System.out.println("Removed warp " + warpName);
                 iterator.remove();  // Entferne das Element sicher über den Iterator
             }
 
