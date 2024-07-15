@@ -18,6 +18,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.UUID;
 
 /**This is the class that saves the set language of a player. It allows you to set a language of a player, or get the
@@ -36,20 +37,27 @@ public class PlayerLanguageManager {
 
     /**This sets the language in the player_languages.yml file to the given language.
      * @Important: the language must equal the name of the corresponding .yml file!
-     * @Parameter: uuid -> the uuid which the language will be set for.
-     *             language -> the language it will be set to.*/
-    public void setPlayerLanguage(@Nonnull final UUID uuid, @Nonnull final String language){
-        languageConfig.set(uuid.toString(), language);
+     * @Parameter: Uuid -> the uuid which the language will be set for.
+     *             Locale -> the language it will be set to.*/
+    public void setPlayerLanguage(@Nonnull final UUID uuid, @Nonnull final Locale language){
+        String localeString = language.toLanguageTag().replace('-', '_');
+        languageConfig.set(uuid.toString(), localeString);
         save(2);
     }
 
     /**This will return the corresponding language to the uuid set in the player_languages.yml file.
-     * @Returns: String matching the set language.*/
-    public String getPlayerLanguage(@Nonnull final UUID uuid){
-        if (languageConfig.get(uuid.toString()) != null)
-            return languageConfig.getString(uuid.toString());
-        else
-            return "english";
+     * @Returns: Locale matching the set language.*/
+    public Locale getPlayerLanguage(@Nonnull final UUID uuid){
+        if (languageConfig.get(uuid.toString()) != null) {
+
+            String localeString = languageConfig.getString(uuid.toString());
+            Locale language = Locale.forLanguageTag(localeString.replace('_', '-'));;//making a locale out of the saved local.toString()
+
+            return language;
+        }
+        else {
+            return Locale.ENGLISH;//Default is Locale.ENGLISH
+        }
     }
 
     private void save(int savingTries) {

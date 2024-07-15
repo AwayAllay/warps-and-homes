@@ -16,18 +16,17 @@ package me.lukaos187.warpsandhomes;
 import me.lukaos187.warpsandhomes.commands.ConfigCommandManager;
 import me.lukaos187.warpsandhomes.commands.OpenMenu;
 import me.lukaos187.warpsandhomes.commands.WarpCommandManager;
-import me.lukaos187.warpsandhomes.listener.*;
+import me.lukaos187.warpsandhomes.listener.OnDamage;
+import me.lukaos187.warpsandhomes.listener.OnInventoryClick;
+import me.lukaos187.warpsandhomes.listener.OnJoin;
+import me.lukaos187.warpsandhomes.listener.OnQuit;
 import me.lukaos187.warpsandhomes.util.*;
 import me.lukaos187.warpsandhomes.util.translationUtils.PlayerLanguageManager;
-import me.lukaos187.warpsandhomes.util.translationUtils.TranslationManager;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
+import java.util.Locale;
 import java.util.Objects;
 //FIXME TRANSLATIONS NEEDED
 public class WarpsAndHomes extends JavaPlugin {
@@ -35,11 +34,12 @@ public class WarpsAndHomes extends JavaPlugin {
     private static WarpsAndHomes plugin;
     private WarpFile warpFile;
     private PlayerLanguageManager playerLanguageManager;
-    private TranslationManager translationManager;
-
+    private Translator translator;
     @Override
     public void onEnable() {
         // Plugin startup logic
+        saveDefaultConfig();
+
         plugin = this;
         setup();
     }
@@ -76,33 +76,8 @@ public class WarpsAndHomes extends JavaPlugin {
     }
 
     private void languageSetUp() {
-
         playerLanguageManager = new PlayerLanguageManager(getDataFolder());
-        translationManager = new TranslationManager(getDataFolder());
-
-        saveResourceIfNotExists("languages/english.yml", 2);
-        saveResourceIfNotExists("languages/german.yml", 2);
-    }
-
-    private void saveResourceIfNotExists(final String languageResourcePath, int savingTries) {
-
-        File file = new File(getDataFolder(), languageResourcePath);
-        if (!file.exists()){
-
-            file.getParentFile().mkdirs();
-            try (InputStream in = getResource(languageResourcePath)){
-                if (in != null)
-                    Files.copy(in, file.toPath());
-            }catch (IOException e){
-                if (savingTries > 0){
-                    saveResourceIfNotExists(languageResourcePath, savingTries--);
-                }else {
-                    getLogger().info("[WarpsAndHomes] Language option failed. Try restarting the server " +
-                            "to gain access to it.");
-                }
-            }
-        }
-
+        translator = new Translator(playerLanguageManager);
     }
 
     private void classesSetup(final WarpFile warpFile) {
@@ -111,8 +86,10 @@ public class WarpsAndHomes extends JavaPlugin {
 
         Bukkit.getOnlinePlayers().forEach(player -> {
             if (player != null) {
+                playerLanguageManager.setPlayerLanguage(player.getUniqueId(), Locale.GERMAN);
                 warpFile.removeSuperfluousWarps(player);
                 PlayerUtils.getSkinColors().put(player.getUniqueId(), new SkinColorExtractor(player).getSkinColors());
+                translator.translate(player,"hello", player.getName());
             }
         });
 

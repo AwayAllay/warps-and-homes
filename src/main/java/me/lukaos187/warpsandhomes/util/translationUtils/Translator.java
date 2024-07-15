@@ -13,67 +13,60 @@
  */
 package me.lukaos187.warpsandhomes.util.translationUtils;
 
+import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
+import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
-/**This is the Translator class. It can translate your messages into the supported languages of the plugin.
- * @Parameter: YamlConfiguration -> the player_languages.yml file with the saved languages to the UUIDs.
- * TranslationManager -> the translationManager object containing all the supported languages.*/
 public class Translator {
 
-    private final YamlConfiguration languageConfig;
-    private final TranslationManager translationManager;
+    private final PlayerLanguageManager playerLanguageManager;
 
-    public Translator(YamlConfiguration languageConfig, TranslationManager translationManager) {
-        this.languageConfig = languageConfig;
-        this.translationManager = translationManager;
+    public Translator(PlayerLanguageManager playerLanguageManager) {
+        this.playerLanguageManager = playerLanguageManager;
     }
 
     /**Sends a translated message to the player.
      * @Parameter: Player -> the recipient of the message which will get the message in his set language.
-     * String -> the key of the langage.yml file under which your message is saved.*/
-    public void translate(Player recipient, String messageKey){
+     * String -> the key of the message you want to send to the player.*/
+    public void translate(Player recipient, String messageKey, Object... args){
 
         if (recipient == null){
             return;
         }
         UUID uuid = recipient.getUniqueId();
+        Locale language = playerLanguageManager.getPlayerLanguage(uuid);
 
-        String language;
-        if (languageConfig.getString(uuid.toString()) != null){
-            language = languageConfig.getString(uuid.toString());
-        }
-        else {
-            language = "english";
-        }
+        ResourceBundle messages = ResourceBundle.getBundle("me.lukaos187.warpsandhomes.messages", language, WarpsAndHomes.getPlugin().getClass().getClassLoader());
 
-        YamlConfiguration languageFile = translationManager.getTranslation(language);
-
-        translateMessage(languageFile, messageKey, recipient);
-
+        sendMessage(recipient, messageKey, messages, 2, args);
     }
 
-    private void translateMessage(final YamlConfiguration languageFile, final String messageKey, final Player recipient) {
+    private void sendMessage(final Player recipient, final String messageKey, final ResourceBundle messages,
+                             int sendingTries, Object... args) {
 
-        if (languageFile.get(messageKey) != null){
+        try{
 
-            if (languageFile.isList(messageKey)){
+            String message = messages.getString(messageKey);
 
-                languageFile.getStringList(messageKey).forEach(message ->
-                        recipient.sendMessage(ChatColor.translateAlternateColorCodes('&', message)));
+            if (args != null){
+
+                String formatted = MessageFormat.format(message, args);
+                recipient.sendMessage(ChatColor.translateAlternateColorCodes('&', formatted));//Allows placeholders such as {0} {1}
+
             }else {
-
-                recipient.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        Objects.requireNonNull(languageFile.getString(messageKey))));
-
+                recipient.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
             }
-        }else {
-            recipient.sendMessage(ChatColor.DARK_GRAY + "[WarpsAndHomes] ... be happy^^");
-        }
 
+        }catch (NullPointerException | MissingResourceException | ClassCastException e){
+            if (sendingTries > 0){
+                sendMessage(recipient, messageKey, messages, sendingTries--);
+            }
+        }
     }
 }
