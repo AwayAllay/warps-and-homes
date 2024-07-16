@@ -61,7 +61,7 @@ public class ConfigWarpParticleColor extends ConfigCommandTemplate {
 
         } else {
             sender.sendMessage(ChatColor.RED + "please provide a colour.");
-            sender.sendMessage("Use: " + ChatColor.AQUA + "/wahconfig particleColour <colour>");
+            sender.sendMessage("Use: " + ChatColor.AQUA + getUsage());
         }
 
     }

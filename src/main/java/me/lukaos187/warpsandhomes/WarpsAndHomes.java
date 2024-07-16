@@ -24,6 +24,7 @@ import me.lukaos187.warpsandhomes.util.*;
 import me.lukaos187.warpsandhomes.util.translationUtils.PlayerLanguageManager;
 import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Locale;
@@ -35,6 +36,10 @@ public class WarpsAndHomes extends JavaPlugin {
     private WarpFile warpFile;
     private PlayerLanguageManager playerLanguageManager;
     private Translator translator;
+    public static final String PLUGIN_PREFIX = ChatColor.BLUE + "[" + ChatColor.AQUA + "Warps" + ChatColor.WHITE + "And"
+            + ChatColor.AQUA + "Homes" + ChatColor.BLUE + "]" + ChatColor.RESET;
+
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -89,7 +94,7 @@ public class WarpsAndHomes extends JavaPlugin {
                 playerLanguageManager.setPlayerLanguage(player.getUniqueId(), Locale.GERMAN);
                 warpFile.removeSuperfluousWarps(player);
                 PlayerUtils.getSkinColors().put(player.getUniqueId(), new SkinColorExtractor(player).getSkinColors());
-                translator.translate(player,"hello", player.getName());
+                player.sendMessage(Objects.requireNonNull(translator.translate(player, "hello", player.getName())));
             }
         });
 

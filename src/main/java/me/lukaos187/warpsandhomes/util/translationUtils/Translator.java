@@ -17,6 +17,7 @@ import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -33,22 +34,24 @@ public class Translator {
 
     /**Sends a translated message to the player.
      * @Parameter: Player -> the recipient of the message which will get the message in his set language.
-     * String -> the key of the message you want to send to the player.*/
-    public void translate(Player recipient, String messageKey, Object... args){
+     * String -> the key of the message you want to send to the player.
+     * @Returns: A String with the translated text null if not found.*/
+    @Nullable
+    public String translate(Player recipient, String messageKey, Object... args){
 
         if (recipient == null){
-            return;
+            return null;
         }
         UUID uuid = recipient.getUniqueId();
         Locale language = playerLanguageManager.getPlayerLanguage(uuid);
 
         ResourceBundle messages = ResourceBundle.getBundle("me.lukaos187.warpsandhomes.messages", language, WarpsAndHomes.getPlugin().getClass().getClassLoader());
 
-        sendMessage(recipient, messageKey, messages, 2, args);
+        return sendMessage(messageKey, messages, args);
     }
 
-    private void sendMessage(final Player recipient, final String messageKey, final ResourceBundle messages,
-                             int sendingTries, Object... args) {
+    @Nullable
+    private String sendMessage(final String messageKey, final ResourceBundle messages, Object... args) {
 
         try{
 
@@ -57,16 +60,14 @@ public class Translator {
             if (args != null){
 
                 String formatted = MessageFormat.format(message, args);
-                recipient.sendMessage(ChatColor.translateAlternateColorCodes('&', formatted));//Allows placeholders such as {0} {1}
+                return WarpsAndHomes.PLUGIN_PREFIX + ChatColor.translateAlternateColorCodes('&', formatted);//Allows placeholders such as {0} {1}
 
             }else {
-                recipient.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+                return WarpsAndHomes.PLUGIN_PREFIX + ChatColor.translateAlternateColorCodes('&', message);
             }
 
         }catch (NullPointerException | MissingResourceException | ClassCastException e){
-            if (sendingTries > 0){
-                sendMessage(recipient, messageKey, messages, sendingTries--);
-            }
+            return null;
         }
     }
 }

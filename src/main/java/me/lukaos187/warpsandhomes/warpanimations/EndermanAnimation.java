@@ -71,7 +71,7 @@ public class EndermanAnimation {
 
         player.teleport(warp.getLocation());
         player.playSound(player, teleportSound, 5F, 5F);
-        player.sendMessage("Warped you to " + ChatColor.AQUA + warp.getName());
+        player.sendMessage(WarpsAndHomes.PLUGIN_PREFIX + "Warped you to " + ChatColor.AQUA + warp.getName());
 
         spawnParticles(player.getLocation());
 

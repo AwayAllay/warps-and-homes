@@ -12,7 +12,7 @@
  * If not, see <https://www.gnu.org/licenses/>.
  */
 package me.lukaos187.warpsandhomes.util;
-//FIXME TRANSLATIONS NEEDED
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
