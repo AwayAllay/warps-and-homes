@@ -91,8 +91,8 @@ public class WarpRename implements Subcommand{
             return false;
         }
         if (!warp.getOwner().equals(player)){
-            player.sendMessage(ChatColor.RED + "Warps can only be locked by their owner.");
-            player.sendMessage("Ask " + ChatColor.AQUA + warp.getOwner().getName() + ChatColor.RESET + " to lock this" +
+            player.sendMessage(ChatColor.RED + "Warps can only be renamed by their owner.");
+            player.sendMessage("Ask " + ChatColor.AQUA + warp.getOwner().getName() + ChatColor.RESET + " to rename this" +
                     " warp.");
             return false;
         }

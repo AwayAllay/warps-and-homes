@@ -57,8 +57,8 @@ public class WarpDescribe implements Subcommand{
                 return;
             }
             if (!warp.getOwner().equals(player)){
-                player.sendMessage(ChatColor.RED + "Warps can only be locked by their owner.");
-                player.sendMessage("Ask " + ChatColor.AQUA + warp.getOwner().getName() + ChatColor.RESET + " to unlock this" +
+                player.sendMessage(ChatColor.RED + "Warps can only be described by their owner.");
+                player.sendMessage("Ask " + ChatColor.AQUA + warp.getOwner().getName() + ChatColor.RESET + " to describe this" +
                         " warp.");
                 return;
             }

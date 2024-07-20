@@ -81,7 +81,7 @@ public class WarpInfo implements Subcommand{
             return;
         }
         if (warp.isPrivate() && !warp.getOwner().getName().equalsIgnoreCase(player.getName())){
-            player.sendMessage("This warp is " + ChatColor.AQUA + "private");
+            player.sendMessage("This warp is " + ChatColor.RED + "private");
             return;
         }
 
