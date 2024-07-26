@@ -5,3 +5,4 @@
 //TODO write tests for everything
 //TODO add homes part
 //TODO write README.md
+//TODO setLanguage command for player and default-language

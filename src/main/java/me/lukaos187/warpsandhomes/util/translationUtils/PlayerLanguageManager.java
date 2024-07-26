@@ -13,12 +13,14 @@
  */
 package me.lukaos187.warpsandhomes.util.translationUtils;
 
+import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 /**This is the class that saves the set language of a player. It allows you to set a language of a player, or get the
@@ -50,13 +52,35 @@ public class PlayerLanguageManager {
     public Locale getPlayerLanguage(@Nonnull final UUID uuid){
         if (languageConfig.get(uuid.toString()) != null) {
 
-            String localeString = languageConfig.getString(uuid.toString());
-            Locale language = Locale.forLanguageTag(localeString.replace('_', '-'));;//making a locale out of the saved local.toString()
+            try {
+                String localeString = languageConfig.getString(uuid.toString());
+                return new Locale(Objects.requireNonNull(localeString));
 
-            return language;
+            }catch (NullPointerException e){
+                return getDefaultLocale();
+            }
         }
         else {
-            return Locale.ENGLISH;//Default is Locale.ENGLISH
+            return getDefaultLocale();
+        }
+    }
+
+    /**This will return the default language set in the config.yml as a locale.
+     * @Returns: Locale matching the language in the config.yml, Locale.ENGLISH as default.*/
+    public Locale getDefaultLocale(){
+        if (WarpsAndHomes.getPlugin().getConfig().getString("default-language") != null) {
+            String localeString = WarpsAndHomes.getPlugin().getConfig().getString("default-language");
+            Locale locale;
+            try {
+                locale = Locale.forLanguageTag(localeString.replace('_', '-'));
+            }catch (NullPointerException e){
+                WarpsAndHomes.getPlugin().getLogger().info(WarpsAndHomes.PLUGIN_PREFIX + "No valid language in config.yml.");
+                return Locale.ENGLISH;
+            }
+            return locale;
+
+        }else {
+            return Locale.ENGLISH;
         }
     }
 

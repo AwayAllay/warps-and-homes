@@ -36,8 +36,8 @@ public class WarpsAndHomes extends JavaPlugin {
     private WarpFile warpFile;
     private PlayerLanguageManager playerLanguageManager;
     private Translator translator;
-    public static final String PLUGIN_PREFIX = ChatColor.BLUE + "[" + ChatColor.AQUA + "Warps" + ChatColor.WHITE + "And"
-            + ChatColor.AQUA + "Homes" + ChatColor.BLUE + "]" + ChatColor.RESET;
+    public static final String PLUGIN_PREFIX = ChatColor.GRAY + "[" + ChatColor.AQUA + "WarpsAndHomes" + ChatColor.GRAY
+            + "]" + ChatColor.RESET + " ";
 
 
     @Override
@@ -91,7 +91,7 @@ public class WarpsAndHomes extends JavaPlugin {
 
         Bukkit.getOnlinePlayers().forEach(player -> {
             if (player != null) {
-                playerLanguageManager.setPlayerLanguage(player.getUniqueId(), Locale.GERMAN);
+                playerLanguageManager.setPlayerLanguage(player.getUniqueId(), Locale.ENGLISH);
                 warpFile.removeSuperfluousWarps(player);
                 PlayerUtils.getSkinColors().put(player.getUniqueId(), new SkinColorExtractor(player).getSkinColors());
                 player.sendMessage(Objects.requireNonNull(translator.translate(player, "hello", player.getName())));

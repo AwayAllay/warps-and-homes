@@ -44,9 +44,9 @@ public class Translator {
         }
         UUID uuid = recipient.getUniqueId();
         Locale language = playerLanguageManager.getPlayerLanguage(uuid);
-
-        ResourceBundle messages = ResourceBundle.getBundle("me.lukaos187.warpsandhomes.messages", language, WarpsAndHomes.getPlugin().getClass().getClassLoader());
-
+        ResourceBundle messages = ResourceBundle.getBundle("me.lukaos187.warpsandhomes.messages", language,
+                WarpsAndHomes.getPlugin().getClass().getClassLoader());
+        System.out.println(messages.toString());
         return sendMessage(messageKey, messages, args);
     }
 
