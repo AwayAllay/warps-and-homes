@@ -76,29 +76,7 @@ A list with short descriptions of the commands can be output in the chat using `
 - `<displayItem>`: The item that appears for the warp in the warp GUI.
 - `<description>`: Here you can write a short description about the warp,
 
-<!-- From here is the Command (Warp) Description. -->
-<label for="commandInput">**Please enter the command you want to explain here:**<br> </label>
-<input type="text" id="commandInput" oninput="showDescription()">
-<div class="response" id="response"></div>
 
-<script>
-    function showDescription() {
-        const command = document.getElementById('commandInput').value.trim();
-        const responseDiv = document.getElementById('response');
-
-        if (command === 'set') {
-            responseDiv.innerHTML = '<h3>Erklärung für /hallo</h3><p>Der Befehl <code>/hallo</code> wird verwendet, um eine Begrüßung zu senden. Er dient oft dazu, den Benutzer zu begrüßen oder eine Nachricht anzuzeigen.</p>';
-        } 
-        // Erklärung für den Buchstaben "A"
-        else if (command === 'A') {
-            responseDiv.innerHTML = '<h3>Erklärung für A</h3><p>Der Buchstabe <code>A</code> ist der erste Buchstabe des lateinischen Alphabets und hat in vielen Sprachen eine Bedeutung. In der Grammatik kann es als Artikel oder als Vokal verwendet werden.</p>';
-        } 
-        else {
-            responseDiv.innerHTML = 'This command is not in the plugin!'; // Keine Antwort, wenn der Befehl nicht erkannt wird
-        }
-    }
-</script>
-<!-- Till here. -->
 
 ##### Home-Commands
 ***
