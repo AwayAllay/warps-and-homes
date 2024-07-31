@@ -60,28 +60,27 @@ If you can't find a fitting version of this plugin for your server:
 ***
 _Commands are available for homes, warps, language, and configurations, most also accessible through a user-friendly GUI version._
 ### Commands
-_Coming Soon_
-Just act as if there was a detailed, helpful text on the topic here. The actual text is still to come.
+There are two types of commands, commands that manage the config.yml ([Config-Commands](#config-commands)) 
+and the commands for the players ([Game-Commands](#game-commands)).
 
 #### Game-Commands
-Here will be a list of all the commands for the players. It will look like this:
-
-`/command <cool-stuff>` - and a nice description.
-
+***
 ##### Warp-Commands
-_Every command that has to do with warping starts with `/warp`. 
-You can also get an [overview](https://github.com/AwayAllay/warps-and-homes/blob/main/src/main/resources/warpCommands.png)
-of all possible subcommands if you enter `/warp` in the chat._
+A list with short descriptions of the commands can be output in the chat using `/warp`.
 
 **Command:** `/warp set <name> <isPrivate?> <displayItem> <description>`  
-_Sets a warp at the players current location._  
+**Description:** _Sets a warp at the players current location._  
 **Parameters:** 
 - `<name>`: the name of the new warp.
-- `<isPrivate?>`: if true this warp can only be seen by its owner. If false it is public and can be seen by anyone.
+- `<isPrivate?>`: _True_ -> warp is only visible to its owner. _False_ -> it is visible to anyone.
 - `<displayItem>`: The item that appears for the warp in the warp GUI.
 - `<description>`: Here you can write a short description about the warp,
 
+
+
+
 ##### Home-Commands
+***
 And commands for the homes stuff.
 
 #### Config-Commands
