@@ -15,10 +15,11 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigDamageCooldownPlayer extends ConfigCommandTemplate{
-    public ConfigDamageCooldownPlayer(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigDamageCooldownPlayer(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "damage-cooldown-player",
                  "Player-damage-cooldown is now " + ChatColor.GREEN + "activated",
                 "Player-damage-cooldown is now " + ChatColor.RED + "disabled");

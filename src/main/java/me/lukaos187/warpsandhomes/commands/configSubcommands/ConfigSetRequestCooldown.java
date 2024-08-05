@@ -16,11 +16,12 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class ConfigSetRequestCooldown extends ConfigCommandTemplate{
-    public ConfigSetRequestCooldown(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigSetRequestCooldown(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "request-cooldown",
                 "",
                 "");

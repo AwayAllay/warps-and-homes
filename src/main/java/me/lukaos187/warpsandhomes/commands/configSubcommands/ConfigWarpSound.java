@@ -16,6 +16,7 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ConfigWarpSound extends ConfigCommandTemplate{
-    public ConfigWarpSound(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigWarpSound(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "warping-sound",
                 "Animation set",
                 "Something went horrible wrong..."

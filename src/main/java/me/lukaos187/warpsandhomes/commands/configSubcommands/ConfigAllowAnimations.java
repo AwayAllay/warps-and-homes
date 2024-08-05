@@ -15,14 +15,18 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigAllowAnimations extends ConfigCommandTemplate{
-    public ConfigAllowAnimations(WarpFile warpFile, SubcommandAdder subAdder) {
+
+    private final Translator translator;
+    public ConfigAllowAnimations(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
 
         super(warpFile, subAdder, "allow-warp-animations",
                 "Warp-animations are now " + ChatColor.GREEN + "enabled",
                 "Warp-animations are now " + ChatColor.RED + "disabled");
+        this.translator = translator;
     }
 
     @Override

@@ -16,6 +16,7 @@ package me.lukaos187.warpsandhomes.commands;
 import me.lukaos187.warpsandhomes.commands.configSubcommands.*;
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.command.Command;
@@ -32,43 +33,45 @@ public class ConfigCommandManager implements TabExecutor {
     private final List<ConfigSubcommand> subcommands = new ArrayList<>();
     private final WarpFile warpFile;
     private final SubcommandAdder subAdder;
+    private final Translator translator;
 
-    public ConfigCommandManager(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigCommandManager(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         this.warpFile = warpFile;
         this.subAdder = subAdder;
+        this.translator = translator;
         addConfigSubcommands();
     }
 
     private void addConfigSubcommands() {
-        subcommands.add(new ConfigWarpDelete(warpFile, subAdder));
-        subcommands.add(new ConfigWarpDescribe(warpFile, subAdder));
-        subcommands.add(new ConfigWarpHandOver(warpFile, subAdder));
-        subcommands.add(new ConfigWarpInfo(warpFile, subAdder));
-        subcommands.add(new ConfigWarpList(warpFile, subAdder));
-        subcommands.add(new ConfigWarpRename(warpFile, subAdder));
-        subcommands.add(new ConfigWarpUpdate(warpFile, subAdder));
-        subcommands.add(new ConfigWarpPublic(warpFile, subAdder));
-        subcommands.add(new ConfigWarpPrivate(warpFile, subAdder));
-        subcommands.add(new ConfigWarpClear(warpFile, subAdder));
-        subcommands.add(new ConfigReload(warpFile, subAdder));
-        subcommands.add(new ConfigWarpParticleColor(warpFile, subAdder));
-        subcommands.add(new ConfigWarpAnimationtype(warpFile, subAdder));
-        subcommands.add(new ConfigAllowAnimations(warpFile, subAdder));
-        subcommands.add(new ConfigWarpMax(warpFile, subAdder));
-        subcommands.add(new ConfigWarpMaxWarps(warpFile, subAdder));
-        subcommands.add(new ConfigDamageCooldown(warpFile, subAdder));
-        subcommands.add(new ConfigDamageCooldownPlayer(warpFile, subAdder));
-        subcommands.add(new ConfigSetDamageCooldown(warpFile, subAdder));
-        subcommands.add(new ConfigCrossdimensionalWarping(warpFile, subAdder));
-        subcommands.add(new ConfigWarpCooldown(warpFile, subAdder));
-        subcommands.add(new ConfigSetCooldown(warpFile, subAdder));
-        subcommands.add(new ConfigWarpSound(warpFile, subAdder));
-        subcommands.add(new ConfigWarpRequest(warpFile, subAdder));
-        subcommands.add(new ConfigWarpRequest(warpFile, subAdder));
-        subcommands.add(new ConfigAllowPrivateRequests(warpFile, subAdder));
-        subcommands.add(new ConfigHasRequestCooldown(warpFile, subAdder));
-        subcommands.add(new ConfigSetRequestCooldown(warpFile, subAdder));
-        subcommands.add(new ConfigAllowGUIChat(warpFile, subAdder));
+        subcommands.add(new ConfigWarpDelete(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpDescribe(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpHandOver(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpInfo(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpList(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpRename(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpUpdate(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpPublic(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpPrivate(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpClear(warpFile, subAdder, translator));
+        subcommands.add(new ConfigReload(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpParticleColor(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpAnimationtype(warpFile, subAdder, translator));
+        subcommands.add(new ConfigAllowAnimations(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpMax(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpMaxWarps(warpFile, subAdder, translator));
+        subcommands.add(new ConfigDamageCooldown(warpFile, subAdder, translator));
+        subcommands.add(new ConfigDamageCooldownPlayer(warpFile, subAdder, translator));
+        subcommands.add(new ConfigSetDamageCooldown(warpFile, subAdder, translator));
+        subcommands.add(new ConfigCrossdimensionalWarping(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpCooldown(warpFile, subAdder, translator));
+        subcommands.add(new ConfigSetCooldown(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpSound(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpRequest(warpFile, subAdder, translator));
+        subcommands.add(new ConfigWarpRequest(warpFile, subAdder, translator));
+        subcommands.add(new ConfigAllowPrivateRequests(warpFile, subAdder, translator));
+        subcommands.add(new ConfigHasRequestCooldown(warpFile, subAdder, translator));
+        subcommands.add(new ConfigSetRequestCooldown(warpFile, subAdder, translator));
+        subcommands.add(new ConfigAllowGUIChat(warpFile, subAdder, translator));
     }
 
 

@@ -15,10 +15,11 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigWarpClear extends ConfigCommandTemplate{
-    public ConfigWarpClear(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigWarpClear(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "allow-warp-clearing",
                 "Allow-warp-clearing is now set to " + ChatColor.GREEN + "true",
                 "Allow-warp-clearing is now set to " + ChatColor.RED + "false");

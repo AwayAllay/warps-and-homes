@@ -15,10 +15,11 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigCrossdimensionalWarping extends ConfigCommandTemplate{
-    public ConfigCrossdimensionalWarping(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigCrossdimensionalWarping(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "allow-crossdimentional-warping",
                 "Crossdimensional-warping is " + ChatColor.GREEN + "activated",
                 "Crossdimensional-warping is " + ChatColor.RED + "disabled");

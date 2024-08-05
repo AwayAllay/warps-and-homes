@@ -15,10 +15,11 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigWarpCooldown extends ConfigCommandTemplate{
-    public ConfigWarpCooldown(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigWarpCooldown(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "warp-cooldown",
                 "Warping-cooldown is now " + ChatColor.GREEN + "activated",
                 "Warping-cooldown is now " + ChatColor.RED + "disabled");

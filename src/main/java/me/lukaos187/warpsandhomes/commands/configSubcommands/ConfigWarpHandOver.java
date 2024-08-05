@@ -15,10 +15,11 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigWarpHandOver extends ConfigCommandTemplate{
-    public ConfigWarpHandOver(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigWarpHandOver(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "allow-warp-hand-overing",
                 "Allow-warp-hand-overing is now set to " + ChatColor.GREEN + "true",
                 "Allow-warp-hand-overing is now set to " + ChatColor.RED + "false");

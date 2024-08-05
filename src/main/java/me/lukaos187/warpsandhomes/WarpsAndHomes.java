@@ -61,7 +61,7 @@ public class WarpsAndHomes extends JavaPlugin {
         SubcommandAdder subAdder = new SubcommandAdder(warpFile);
         //Register the commands
         Objects.requireNonNull(getCommand("warp")).setExecutor(new WarpCommandManager(warpFile, subAdder));
-        Objects.requireNonNull(getCommand("wahConfig")).setExecutor(new ConfigCommandManager(warpFile, subAdder));
+        Objects.requireNonNull(getCommand("wahConfig")).setExecutor(new ConfigCommandManager(warpFile, subAdder, translator));
         if (getConfig().getBoolean("allow-warp-gui-per-chat"))
             Objects.requireNonNull(getCommand("warpMenu")).setExecutor(new OpenMenu(warpFile));
         //Register the commands

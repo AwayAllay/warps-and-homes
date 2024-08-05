@@ -15,11 +15,12 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigWarpInfo extends ConfigCommandTemplate{
 
-    public ConfigWarpInfo(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigWarpInfo(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "allow-warp-informing",
                 "Allow-warp-informing is now set to " + ChatColor.GREEN + "true",
                 "Allow-warp-informing is now set to " + ChatColor.RED + "false");

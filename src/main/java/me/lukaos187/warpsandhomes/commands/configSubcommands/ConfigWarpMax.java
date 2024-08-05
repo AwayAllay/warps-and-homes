@@ -15,10 +15,11 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigWarpMax extends ConfigCommandTemplate{
-    public ConfigWarpMax(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigWarpMax(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "enable-max-player-warps",
                 "Maximum for warps " + ChatColor.GREEN + "enabled",
                 "Maximum for warps " + ChatColor.RED + "disabled");

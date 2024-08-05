@@ -16,6 +16,7 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -24,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ConfigWarpAnimationtype extends ConfigCommandTemplate {
-    public ConfigWarpAnimationtype(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigWarpAnimationtype(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "animation-type",
                 "Animation set",
                 "Something went horrible wrong..."

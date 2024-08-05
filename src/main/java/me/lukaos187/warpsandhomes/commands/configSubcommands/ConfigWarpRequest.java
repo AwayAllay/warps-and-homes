@@ -15,10 +15,11 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigWarpRequest extends ConfigCommandTemplate{
-    public ConfigWarpRequest(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigWarpRequest(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "allow-warp-requests",
                 "Allow-warp-requests is now set to " + ChatColor.GREEN + "true",
                 "Allow-warp-requests is now set to " + ChatColor.RED + "false");

@@ -15,10 +15,11 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigWarpList extends ConfigCommandTemplate{
-    public ConfigWarpList(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigWarpList(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "allow-warp-listing",
                 "Allow-warp-listing is now set to " + ChatColor.GREEN + "true",
                 "Allow-warp-listing is now set to " + ChatColor.RED + "false");

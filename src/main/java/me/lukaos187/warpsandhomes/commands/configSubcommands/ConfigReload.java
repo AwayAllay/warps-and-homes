@@ -16,11 +16,12 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 import me.lukaos187.warpsandhomes.WarpsAndHomes;
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class ConfigReload extends ConfigCommandTemplate{
-    public ConfigReload(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigReload(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "custom-config-key",
                 "Config.yml " + ChatColor.GREEN + "reloaded",
                 ChatColor.RED + "Could not reload the config.yml");

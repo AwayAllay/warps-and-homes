@@ -15,13 +15,17 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigAllowGUIChat extends ConfigCommandTemplate{
-    public ConfigAllowGUIChat(WarpFile warpFile, SubcommandAdder subAdder) {
+
+    private final Translator translator;
+    public ConfigAllowGUIChat(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "allow-warp-gui-per-chat",
                 "Allow-warp-gui-per-chat is now set to " + ChatColor.GREEN + "true",
                 "Allow-warp-gui-per-chat is now set to " + ChatColor.RED + "false");
+        this.translator = translator;
     }
 
     @Override

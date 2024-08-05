@@ -15,11 +15,12 @@ package me.lukaos187.warpsandhomes.commands.configSubcommands;
 //FIXME TRANSLATIONS NEEDED
 import me.lukaos187.warpsandhomes.util.SubcommandAdder;
 import me.lukaos187.warpsandhomes.util.WarpFile;
+import me.lukaos187.warpsandhomes.util.translationUtils.Translator;
 import org.bukkit.ChatColor;
 
 public class ConfigWarpDelete extends ConfigCommandTemplate {
 
-    public ConfigWarpDelete(WarpFile warpFile, SubcommandAdder subAdder) {
+    public ConfigWarpDelete(WarpFile warpFile, SubcommandAdder subAdder, Translator translator) {
         super(warpFile, subAdder, "allow-warp-deleting",
                 "Allow-warp-deleting is now set to " + ChatColor.GREEN + "true",
                 "Allow-warp-deleting is now set to " + ChatColor.RED + "false");
