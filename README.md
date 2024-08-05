@@ -13,10 +13,6 @@ _For more cool stuff_**:** Check out my [github profile](https://github.com/Away
 - [Installation](#installation)
 - [Usage](#usage)
   - [Commands](#commands)
-    - [Game-Commands](#game-commands)
-      - [Warp-Commands](#warp-commands)
-      - [Home-Commands](#home-commands)
-    - [Config-Commands](#config-commands)
   - [GUI](#gui)
   - [Config.yml](#configyml)
 - [Current](#current)
@@ -58,37 +54,17 @@ If you can't find a fitting version of this plugin for your server:
 
 ## Usage
 ***
-_Commands are available for homes, warps, language, and configurations, most also accessible through a user-friendly GUI version._
+Here you will find all you need to use this plugin in all ways. If anything is unclear, please create an 
+[issue](https://github.com/AwayAllay/warps-and-homes/issues).
 ### Commands
-There are two types of commands, commands that manage the config.yml ([Config-Commands](#config-commands)) 
-and the commands for the players ([Game-Commands](#game-commands)).
-
-#### Game-Commands
 ***
-##### Warp-Commands
-A list with short descriptions of the commands can be output in the chat using `/warp`.
-
-**Command:** `/warp set <name> <isPrivate?> <displayItem> <description>`  
-**Description:** _Sets a warp at the players current location._  
-**Parameters:** 
-- `<name>`: the name of the new warp.
-- `<isPrivate?>`: _True_ -> warp is only visible to its owner. _False_ -> it is visible to anyone.
-- `<displayItem>`: The item that appears for the warp in the warp GUI.
-- `<description>`: Here you can write a short description about the warp,
-
-
-
-##### Home-Commands
-***
-And commands for the homes stuff.
-
-#### Config-Commands
-
-And these commands only admins are allowed to use, because they directly affect the config.yml file.
+_Commands are available for homes, warps, language, and configurations, most also accessible through a user-friendly GUI version._  
 
 ### GUI
+***
 _Soon_
 ### Config.yml
+***
 Detailed information about the individual settings can be found as comments in the 
 [config.yml](https://github.com/AwayAllay/warps-and-homes/blob/main/src/main/resources/config.yml) file. If you 
 still have any questions or issues, please create a issue in the [issues tab](https://github.com/AwayAllay/warps-and-homes/issues).
